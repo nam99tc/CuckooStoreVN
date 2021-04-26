@@ -66,6 +66,11 @@ namespace CuckooStore.Presentation.Areas.Admin.Controllers
             {
                 ballotImportDetail.BallotImportID = (int)Session["idBallot"];
                 _ballotImportDetail.Create(ballotImportDetail);
+
+                //update quantity pro
+                var pro = _product.GetById(ballotImportDetail.ProductID);
+                pro.Quantity += ballotImportDetail.Quantity;
+                _product.Update(pro);
                 return RedirectToAction("Index", new { id = (int)Session["idBallot"] });
             }
             ViewBag.ProductID = new SelectList(_product.GetAll(), "ProductID", "ProductName", ballotImportDetail.ProductID);
@@ -80,6 +85,7 @@ namespace CuckooStore.Presentation.Areas.Admin.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             BallotImportDetail ballotImportDetail = _ballotImportDetail.GetById(id);
+            Session["qtyProBallot"] = ballotImportDetail.Quantity;
             if (ballotImportDetail == null)
             {
                 return HttpNotFound();
@@ -99,6 +105,11 @@ namespace CuckooStore.Presentation.Areas.Admin.Controllers
             {
                 ballotImportDetail.BallotImportID = (int)Session["idBallot"];
                 _ballotImportDetail.Update(ballotImportDetail);
+
+                //update qty
+                var pro = _product.GetById(ballotImportDetail.ProductID);
+                pro.Quantity = pro.Quantity - (int)Session["qtyProBallot"] + ballotImportDetail.Quantity;
+                _product.Update(pro);
                 return RedirectToAction("Index", new { id = (int)Session["idBallot"] });
             }
             ViewBag.ProductID = new SelectList(_product.GetAll(), "ProductID", "ProductName", ballotImportDetail.ProductID);
@@ -108,7 +119,13 @@ namespace CuckooStore.Presentation.Areas.Admin.Controllers
         [HttpPost]
         public async Task<ActionResult> Delete(int id)
         {
+            var ballot = _ballotImportDetail.GetById(id);
             await _ballotImportDetail.DeleteAsync(id);
+
+            //update qty
+            var pro = _product.GetById(ballot.ProductID);
+            pro.Quantity -= ballot.Quantity;
+            _product.Update(pro);
 
             return RedirectToAction("Index", new { id = (int)Session["idBallot"] });
         }
