@@ -1,0 +1,48 @@
+﻿@{
+    ViewBag.Title = "Lịch sử mua hàng";
+}
+<div class="bor10 m-t-50 p-t-43 p-b-40">
+    <!-- Tab01 -->
+    <div class="tab01">
+        <!-- Nav tabs -->
+        <ul class="nav nav-tabs" role="tablist">
+            <li class="nav-item p-b-10">
+                <a class="nav-link active" data-toggle="tab" href="#ChoXacNhan" role="tab">Chờ xác nhận</a>
+            </li>
+            <li class="nav-item p-b-10">
+                <a class="nav-link" data-toggle="tab" href="#DangGiao" role="tab">Đang giao</a>
+            </li>
+            <li class="nav-item p-b-10">
+                <a class="nav-link" data-toggle="tab" href="#DaNhan" role="tab">Đã nhận</a>
+            </li>
+            <li class="nav-item p-b-10">
+                <a class="nav-link" data-toggle="tab" href="#DaHuy" role="tab">Đã hủy</a>
+            </li>
+        </ul>
+        <!-- Tab panes -->
+        <div class="tab-content p-t-43">
+            <div class="tab-pane fade show active" id="ChoXacNhan" role="tabpanel">
+                @{ 
+                    Html.RenderAction("_ChoXacNhan", "HistoryOrder");
+                }
+            </div>
+            <div class="tab-pane fade" id="DangGiao" role="tabpanel">
+                @{ 
+                    Html.RenderAction("_DangGiao", "HistoryOrder");
+                }
+            </div>
+            <div class="tab-pane fade" id="DaNhan" role="tabpanel">
+                @{ 
+                    Html.RenderAction("_DaNhan", "HistoryOrder");
+                }
+            </div>
+            <div class="tab-pane fade" id="DaHuy" role="tabpanel">
+                @{ 
+                    Html.RenderAction("_DaHuy", "HistoryOrder");
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+

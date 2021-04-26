@@ -1,0 +1,96 @@
+﻿@model CuckooStore.Models.Cart
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<!-- breadcrumb -->
+<div class="container">
+    <div class="bread-crumb flex-w p-l-25 p-r-15 p-t-30 p-lr-0-lg">
+        <a href="@Url.Action("Index","Home")" class="stext-109 cl8 hov-cl1 trans-04">
+            Trang Chủ
+            <i class="fa fa-angle-right m-l-9 m-r-10" aria-hidden="true"></i>
+        </a>
+        <span class="stext-109 cl4">
+            Giỏ Hàng
+        </span>
+    </div>
+</div>
+@using (Html.BeginForm("UpdateQuantityCart", "Cart"))
+{
+    <!-- Shoping Cart -->
+    <form class="bg0 p-t-75 p-b-85">
+        <div class="container">
+            @if (Model.Items.Count() <= 0)
+            {
+                Html.RenderPartial("EmtyCart");
+            }
+            else
+            {
+                <div class="row">
+                    <div class="col-lg-10 col-xl-10 m-lr-auto m-b-50">
+                        <div class="m-l-25 m-r--38 m-lr-0-xl">
+                            <div class="wrap-table-shopping-cart">
+                                <table class="table-shopping-cart">
+                                    <thead>
+                                        <tr class="table_head">
+                                            <th class="column-1">Ảnh</th>
+                                            <th class="column-2">Tên</th>
+                                            <th class="column-3">Giá</th>
+                                            <th class="column-4">Số Lượng</th>
+                                            <th class="column-5">Tiền</th>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody>
+                                        @foreach (var item in Model.Items)
+                                        {
+                                            //Sum total
+                                            decimal total = Convert.ToDecimal(item._product.UnitPrice * item._quatity);
+                                            <input type="hidden" value="@item._product.ProductID" name="id" />
+                                            <tr class="table_row">
+                                                <td class="column-1">
+                                                    <a href="/Cart/RemoveCart/@item._product.ProductID">
+                                                        <div class="how-itemcart1">
+                                                            <img src="@Url.Content("~/wwwroot/Image/"+item._product.Image)" alt="Image" width="150" height="100" />
+                                                        </div>
+                                                    </a>
+                                                </td>
+                                                <td class="column-2">@Html.DisplayFor(x => item._product.ProductName)</td>
+                                                <td class="column-3">@Html.DisplayFor(x => item._product.UnitPrice)</td>
+                                                <td class="column-4">
+
+                                                    <div class="wrap-num-product flex-w m-l-auto m-r-0">
+                                                        <div class="btn-num-product-down cl8 hov-btn3 trans-04 flex-c-m">
+                                                            <i class="fs-16 zmdi zmdi-minus"></i>
+                                                        </div>
+                                                        <input class="mtext-104 cl3 txt-center num-product" type="number" name="quantity" value="@item._quatity">
+                                                        <div class="btn-num-product-up cl8 hov-btn3 trans-04 flex-c-m">
+                                                            <i class="fs-16 zmdi zmdi-plus"></i>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td class="column-5">@total.ToString("0,0 VND")</td>
+                                            </tr>
+                                        }
+                                    </tbody>
+
+                                </table>
+                            </div>
+                            <div class="flex-w flex-sb-m bor15 p-t-18 p-b-15 p-lr-40 p-lr-15-sm">
+                                <input class="btn flex-c-m stext-101 cl0 bg3 bor14 hov-btn3 trans-04 pointer" type="submit" name="update" value="Cập Nhật" />
+                                <input class="btn flex-c-m stext-101 cl0 bg3 bor14 hov-btn3 trans-04 pointer" type="button" value="Mua Hàng" style="margin-left:-300px" onclick="location.href='@Url.Action("CheckOut","CheckOut")'" />
+                                <div class="size-208">
+                                    <span>Tổng Tiền: </span>
+                                    <span class="mtext-101 cl2" style="color:red;">
+                                        @Model.Total_Money().ToString("0,0 VND")
+                                    </span>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </form>
+}

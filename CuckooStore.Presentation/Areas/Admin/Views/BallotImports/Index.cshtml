@@ -1,0 +1,59 @@
+﻿@model PagedList.IPagedList<CuckooStore.Models.BallotImport>
+@using PagedList.Mvc;
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+<p>
+    @Html.ActionLink("Tạo phiếu nhập mới", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            Người nhận
+        </th>
+        <th>
+            Nơi gửi
+        </th>
+        <th>
+            Kho
+        </th>
+        <th>
+            Ngày nhập
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.NguoiNhan)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FromAdd)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Kho)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NgayNhap)
+            </td>
+            <td>
+                <form action="@Url.Action("Delete","BallotImports", new { id= item.BallotImportID })" method="post">
+                    <a href="@Url.Action("Edit","BallotImports", new { id=item.BallotImportID })" class="btn btn-primary">Sửa</a>
+                    <a href="@Url.Action("Index","BallotImportDetails", new { id=item.BallotImportID })" class="btn btn-primary">Chi tiết</a>
+                    <button type="submit" onclick="return confirm('Bạn có chắc muốn xóa phiếu nhập này?');" class="btn btn-danger">Xóa</button>
+                </form>
+            </td>
+        </tr>
+    }
+
+</table>
+<p style="float:right">Trang @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageCount</p>
+<br />
+<hr />
+<div class="store-filter clearfix" style="display:flex;justify-content:center">
+    @Html.PagedListPager(Model, page => Url.Action("Index", "BallotImports", new { page }))
+</div>

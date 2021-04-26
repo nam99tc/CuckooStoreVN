@@ -1,0 +1,84 @@
+﻿@model PagedList.IPagedList<CuckooStore.Models.User>
+@using PagedList.Mvc;
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+<p>
+    @Html.ActionLink("Tạo mới người dùng", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            Email
+        </th>
+        <th>
+            Địa chỉ
+        </th>
+        <th>
+            SĐT
+        </th>
+        <th>
+            Quyền
+        </th>
+        <th>
+            Trạng thái
+        </th>
+        <th>
+            Ảnh
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                @{
+                    string ImagePath = "~/wwwroot/ImageUser/" + item.Image;
+                }
+                <img width="100" src="@Url.Content(ImagePath)" alt="User" class="img-thumbnail" />
+                <br />
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Address)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Phone)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Role)
+            </td>
+            @if (item.StatusUser == StatusUser.HoatDong)
+            {
+                <td style="color:green">
+                    Hoạt động
+                </td>
+            }
+            else
+            {
+                <td style="color:red">
+                    Khóa
+                </td>
+            }
+
+            <td>
+                <form action="@Url.Action("Delete","Users", new { id= item.UserID })" method="post">
+                    <a href="@Url.Action("Edit","Users", new { id=item.UserID })" class="btn btn-primary">Sửa</a>
+                    <button type="submit" onclick="return confirm('Bạn có chắc muốn xóa người dùng này?');" class="btn btn-danger">Xóa</button>
+                </form>
+            </td>
+        </tr>
+    }
+
+</table>
+<p style="float:right">Trang @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageCount</p>
+<br />
+<hr />
+<div class="store-filter clearfix" style="display:flex;justify-content:center">
+    @Html.PagedListPager(Model, page => Url.Action("Index", "Users", new { page }))
+</div>

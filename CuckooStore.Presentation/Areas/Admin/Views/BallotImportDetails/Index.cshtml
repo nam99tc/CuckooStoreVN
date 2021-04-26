@@ -1,0 +1,45 @@
+﻿@model CuckooStore.Models.BallotImport
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+<div style="color:black;">
+    <h2>Thông tin đơn hàng</h2>
+    <p><strong>Người nhận:</strong>&nbsp;&nbsp;@Model.NguoiNhan</p>
+    <p><strong>Nơi gửi:</strong>&nbsp;&nbsp;@Model.FromAdd</p>
+    <p><strong>Kho:</strong>&nbsp;&nbsp;@Model.Kho</p>
+    <p><strong>Ngày nhập:</strong>&nbsp;&nbsp;@Model.NgayNhap</p>
+</div>
+<p>
+    @Html.ActionLink("Thêm thông tin chi tiết", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            tên sản phẩm
+        </th>
+        <th>
+            số lượng
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model.BallotImportDetails) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Product.ProductName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Quantity)
+        </td>
+        <td>
+            <form action="@Url.Action("Delete","BallotImportDetails", new { id= item.BallotImportDetailID })" method="post">
+                <a href="@Url.Action("Edit","BallotImportDetails", new { id=item.BallotImportDetailID })" class="btn btn-primary">Sửa</a>
+                <button type="submit" onclick="return confirm('Bạn có chắc muốn xóa sarn phẩm này này?');" class="btn btn-danger">Xóa</button>
+            </form>
+        </td>
+    </tr>
+}
+
+</table>

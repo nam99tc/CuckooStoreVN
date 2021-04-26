@@ -1,0 +1,139 @@
+﻿
+@{
+    ViewBag.Title = "About";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<head>
+    <style>
+        .p-b-140, .p-tb-140, .p-all-140 {
+            padding-bottom: 0px;
+        }
+
+        .p-b-120, .p-tb-120, .p-all-120 {
+            padding-bottom: 0px;
+        }
+    </style>
+</head>
+<!-- Content page -->
+<section class="bg0 p-t-104 p-b-116">
+    <div class="container">
+        <div class="flex-w flex-tr">
+            <div class="size-210 bor10 p-lr-70 p-t-55 p-b-70 p-lr-15-lg w-full-md">
+                <form method="post" action="~/Home/Contact">
+                    <h4 class="mtext-105 cl2 txt-center p-b-30">
+                        Thông tin phản hồi
+                    </h4>
+                    <div class="bor8 m-b-20 how-pos4-parent">
+                        <input class="stext-111 cl2 plh3 size-116 p-l-30 p-r-30" type="text" name="name" placeholder="Họ và tên">
+                    </div>
+                    <div class="bor8 m-b-20 how-pos4-parent">
+                        <input class="stext-111 cl2 plh3 size-116 p-l-62 p-r-30" type="text" name="email" placeholder="Email">
+                        <img class="how-pos4 pointer-none" src="~/wwwroot/images/icons/icon-email.png" alt="ICON">
+                    </div>
+                    <div class="bor8 m-b-30">
+                        <textarea class="stext-111 cl2 plh3 size-120 p-lr-28 p-tb-25" name="msg" placeholder="Nội dung"></textarea>
+                    </div>
+                    <button class="flex-c-m stext-101 cl0 size-121 bg3 bor1 hov-btn3 p-lr-15 trans-04 pointer" onclick="return 'Cảm ơn bạn đã góp ý! Chúc quý khách may mắn.'">
+                        Gửi
+                    </button>
+                </form>
+            </div>
+            <div class="size-210 bor10 flex-w flex-col-m p-lr-93 p-tb-30 p-lr-15-lg w-full-md">
+                <div class="flex-w w-full p-b-42">
+                    <span class="fs-18 cl5 txt-center size-211">
+                        <span class="lnr lnr-map-marker"></span>
+                    </span>
+                    <div class="size-212 p-t-2">
+                        <span class="mtext-110 cl2">
+                            Địa Chỉ
+                        </span>
+                        <p class="stext-115 cl6 size-213 p-t-18">
+                            CucKoo Store 57D - Mễ Trì - Nam Từ Liêm - Hà Nội
+                        </p>
+                    </div>
+                </div>
+                <div class="flex-w w-full p-b-42">
+                    <span class="fs-18 cl5 txt-center size-211">
+                        <span class="lnr lnr-phone-handset"></span>
+                    </span>
+                    <div class="size-212 p-t-2">
+                        <span class="mtext-110 cl2">
+                            Điện thoại
+                        </span>
+                        <p class="stext-115 cl1 size-213 p-t-18">
+                            097 751 6941
+                        </p>
+                    </div>
+                </div>
+                <div class="flex-w w-full">
+                    <span class="fs-18 cl5 txt-center size-211">
+                        <span class="lnr lnr-envelope"></span>
+                    </span>
+                    <div class="size-212 p-t-2">
+                        <span class="mtext-110 cl2">
+                            Email
+                        </span>
+                        <p class="stext-115 cl1 size-213 p-t-18">
+                            nam99tc@gmail.com
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Content page -->
+<section class="bg0 p-t-75 p-b-120">
+    <div class="container">
+        <div class="row p-b-148">
+            <div class="col-md-7 col-lg-8">
+                <div class="p-t-7 p-r-85 p-r-15-lg p-r-0-md">
+                    <h3 class="mtext-111 cl2 p-b-16" style="font-family:Arial">
+                        <b>Về chúng tôi</b>
+                    </h3>
+                    <p class="stext-113 cl6 p-b-26" style="font-family:Arial">
+                        Cuckoo đã phát triển các sản phẩm dịch vụ mang tính cách mạng tập trung vào việc tạo ra một môi trường gia đình khỏe mạnh cho người Việt Nam. Trọng tâm cốt lõi xoay quanh các sản phẩm chất lượng cao, dịch vụ khách hàng và công nghệ tiên tiến để chăm sóc cho nhu cầu hàng ngày của con người: Không khí trong lành + Nước sạch + Thực phẩm sạch.
+                    </p>
+                    <p class="stext-113 cl6 p-b-26" style="font-family:Arial">
+                        Trong khi một số công ty cố gắng cung cấp sản phẩm với giá thấp nhất có thể, Cuckoo tâp trung cung cấp GIÁ TRỊ tốt nhất có thể thông qua các gói dịch vụ tư duy đổi mới và chuyển tiếp. Khách hàng có thể yên tâm khi biết Cuckoo sẽ chăm sóc khách từng bước trên đường đi. Chúng tôi sẽ đầu tư ở đây lâu dài và mong muốn tạo ra một ngôi nhà khỏe mạnh cho gia đình bạn ngày hôm nay và cho các thế hệ mai sau. Cam kết phục vụ xuất sắc và dài hạn này là điều làm nên sự khác biệt của Cuckoo và là cách chúng tôi chiếm được cảm tình của hàng triệu người tiêu dùng trên thế giới.
+                    </p>
+                </div>
+            </div>
+            <div class="col-11 col-md-5 col-lg-4 m-lr-auto">
+                <div class="how-bor1 ">
+                    <div class="hov-img0">
+                        <img src="~/wwwroot/images/unnamed.jpg" alt="Image" />
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="order-md-2 col-md-7 col-lg-8 p-b-30">
+                <div class="p-t-7 p-l-85 p-l-15-lg p-l-0-md">
+                    <h3 class="mtext-111 cl2 p-b-16" style="font-family:Arial">
+                        <b>Cuckoo, Thực Phẩm Sạch</b>
+                    </h3>
+                    <p class="stext-113 cl6 p-b-26" style="font-family:Arial">
+                        Vì gạo là một phần chính trong chế độ ăn ở châu Á, nồi cơm điện/nồi áp suất đa năng Cuckoo rất cần thiết để tạo ra những bữa ăn bổ dưỡng cho những người thân yêu. Tính linh hoạt của các sản phẩm của chúng tôi giúp khách hàng rất nhiều các tùy chọn nấu ăn ngoài các thực đơn cơm như canh, bánh mì, sữa chua, nấu đa năng... điều đó cho nồi cơm điện/ nồi cơm áp suất đa năng Cuckoo trở thành một vật dụng không thể thiếu trong nhà bếp của bạn! Thêm vào đó, sự đổi mới không ngừng của chúng tôi để mang lại dinh dưỡng, hương vị và thiết kế tốt nhất chắc chắn sẽ giúp các món ăn bạn nấu đều có chất lượng xứng đáng với cái tên Cuckoo.
+                    </p>
+                    <p class="stext-113 cl6 p-b-26" style="font-family:Arial">
+                        Thiết bị nhà bếp Cuckoo mang lại sự thoải mái và tiện lợi cho ngôi nhà của bạn. Các sản phẩm đa dạng của chúng tôi bao gồm: bếp từ cảm ứng, máy xay sinh tố, bếp nướng điện, ấm điện, dụng cụ nấu ăn, máy rửa chén và nhiều hơn nữa! Với thiết kế tinh xảo, hiện đại, tiện lợi, các thiết bị nhà bếp Cuckoo sẽ giúp bạn xử lý các món ăn phức tạp nhất. Tin tưởng vào thương hiệu đã có 40 năm kinh nghiệm dày dặn, tin tưởng vào Cuckoo.
+                    </p>
+                </div>
+            </div>
+            <div class="order-md-1 col-11 col-md-5 col-lg-4 m-lr-auto p-b-30">
+                <div class="how-bor2">
+                    <div class="hov-img0">
+                        <img src="~/wwwroot/images/gallery-07.jpg" alt="Image" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Map -->
+<div class="map">
+    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3724.4732391334105!2d105.77523701488312!3d21.013742386006484!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31345355f23aa871%3A0xec0811fa7d426418!2zNTcgTeG7hSBUcsOsLCBOYW0gVOG7qyBMacOqbSwgSMOgIE7hu5lpLCBWaeG7h3QgTmFt!5e0!3m2!1svi!2s!4v1615300174120!5m2!1svi!2s" style="border:0; width:100%; height:300px" allowfullscreen="" loading="lazy"></iframe>
+</div>
+

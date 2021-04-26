@@ -1,0 +1,67 @@
+﻿@model PagedList.IPagedList<CuckooStore.Models.Product>
+@using PagedList.Mvc;
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+@{
+    ViewBag.Title = "Index";
+}
+
+<div class="flex-w flex-sb-m p-b-52">
+    @{
+        Html.RenderAction("Menu", "Home");
+    }
+    <!-- Search product -->
+    <div class="dis-none panel-search w-full p-t-10 p-b-15">
+        <form action="/Home/Index" method="post">
+            <div class="bor8 dis-flex p-l-15">
+                <button class="size-113 flex-c-m fs-16 cl2 hov-cl1 trans-04">
+                    <i class="zmdi zmdi-search"></i>
+                </button>
+                <input class="mtext-107 cl2 size-114 plh2 p-r-15" type="text" name="search" placeholder="Search">
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="row isotope-grid">
+    @foreach (var item in Model)
+    {
+        <div class="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item women">
+            <!-- Block2 -->
+            <div class="block2">
+                <div class="block2-txt flex-w flex-t p-t-14">
+                    <div class="block2-pic hov-img0">
+                        @{
+                            string ImagePath = "~/wwwroot/Image/" + item.Image;
+                        }
+                        <img src="@Url.Content(ImagePath)" alt="IMG-PRODUCT" height="280" width="260">
+                        <a href="@Url.Action("Details","Home", new { id = item.ProductID})" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04">
+                            Xem Thêm
+                        </a>
+                    </div>
+                    <div class="block2-txt-child1 flex-col-l " style="margin-top:5px">
+                        <a style="color:black">
+                            @Html.DisplayFor(modelItem => item.ProductName)
+                        </a>
+                        <div>
+                            <span class="cl3" style="color:red; font-size:17px">
+                                @Html.DisplayFor(modelItem => item.UnitPrice)
+                            </span>
+                            <span class="cl3" style="font-size:13px">
+                                <strike>@Html.DisplayFor(modelItem => item.Price)</strike>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+<p style="float:right">Trang @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageCount</p>
+<br />
+<hr />
+<div class="store-filter clearfix" style="display:flex;justify-content:center">
+    @Html.PagedListPager(Model, page => Url.Action("Index", "Home", new { page }))
+</div>
+@{
+    Html.RenderAction("TopProduct", "Home");
+}

@@ -1,0 +1,169 @@
+﻿@model CuckooStore.Models.Cart
+@{
+    ViewBag.Title = "CheckOut";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<!-- breadcrumb -->
+<div class="container">
+    <div class="bread-crumb flex-w p-l-25 p-r-15 p-t-30 p-lr-0-lg">
+        <a href="@Url.Action("Index","Home")" class="stext-109 cl8 hov-cl1 trans-04">
+            Trang Chủ
+            <i class="fa fa-angle-right m-l-9 m-r-10" aria-hidden="true"></i>
+        </a>
+        <span class="stext-109 cl4">
+            Giỏ Hàng
+        </span>
+    </div>
+</div>
+<!-- Shoping Cart -->
+<form class="bg0 p-t-75 p-b-85" method="post" action="/CheckOut/CheckOut">
+    <div class="container">
+        <div class="row">
+
+            <div class="col-lg-10 col-xl-10 m-lr-auto m-b-50">
+                <div class="m-l-25 m-r--38 m-lr-0-xl">
+                    <div class="wrap-table-shopping-cart">
+                        <table class="table-shopping-cart">
+                            <thead>
+                                <tr class="table_head">
+                                    <th class="column-1">Ảnh</th>
+                                    <th class="column-2">Tên</th>
+                                    <th class="column-3">Giá</th>
+                                    <th class="column-4" style="text-align:center">Số Lượng</th>
+                                    <th class="column-5">Tiền</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+
+                                @foreach (var item in Model.Items)
+                                {
+                                    //Sum total
+                                    decimal total = Convert.ToDecimal(item._product.UnitPrice * item._quatity);
+                                    <tr class="table_row">
+                                        <td class="column-1">
+                                            <a href="/Cart/RemoveCart/@item._product.ProductID">
+                                                <div class="how-itemcart1">
+                                                    <img src="@Url.Content("~/wwwroot/Image/"+item._product.Image)" alt="Image" width="150" height="100" />
+                                                </div>
+                                            </a>
+                                        </td>
+                                        <td class="column-2">@Html.DisplayFor(x => item._product.ProductName)</td>
+                                        <td class="column-3">@Html.DisplayFor(x => item._product.UnitPrice)</td>
+                                        <td class="column-4" style="text-align:center">@Html.DisplayFor(x => item._quatity)</td>
+                                        <td class="column-5">@total.ToString("0,0 VND")</td>
+                                    </tr>
+                                }
+                            </tbody>
+
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-10 col-xl-10 m-lr-auto m-b-50">
+                <div class="m-l-25 m-r--38 m-lr-0-xl">
+                    <div class="wrap-table-shopping-cart">
+                        <h4 class="mtext-109 cl2 p-b-30" style="font-family:Arial">
+                            Thông tin đơn hàng
+                        </h4>
+                        <div class="flex-w flex-t bor12 p-b-13">
+                            <div class="size-208">
+                                <span class="stext-110 cl2">
+                                    Tổng tiền
+                                </span>
+                            </div>
+                            <div class="size-209">
+                                <span class="mtext-110 cl2">
+                                    @Model.Total_Money().ToString("0,0 đ")
+                                </span>
+                            </div>
+                        </div>
+                        <div class="flex-w flex-t bor12 p-t-15 p-b-30">
+                            <div class="size-208 w-full-ssm">
+                                <span class="stext-110 cl2">
+                                    Thông tin vận chuyển:
+                                </span>
+                            </div>
+                            <div class="size-209 p-r-18 p-r-0-sm w-full-ssm">
+                                <p class="stext-111 cl6 p-t-2">
+                                    Vui lòng nhập thông tin người nhận hàng. Nếu có bất kì thắc mắc nào hãy liên hệ với chúng tôi.
+                                </p>
+
+                                <div class="p-t-15">
+                                    <span class="stext-112 cl8">
+                                        Thông tin
+                                    </span>
+                                    <div class="bor8 bg0 m-b-12">
+                                        <input class="stext-111 cl8 plh3 size-111 p-lr-15" type="text" name="name" placeholder="Họ và tên" required value="@Session["HoTen"]">
+                                    </div>
+                                    <div class="bor8 bg0 m-b-12">
+                                        <input class="stext-111 cl8 plh3 size-111 p-lr-15" type="text" name="email" placeholder="Email" required value="@Session["Email"]">
+                                    </div>
+                                    <div class="bor8 bg0 m-b-22">
+                                        <input class="stext-111 cl8 plh3 size-111 p-lr-15" type="text" name="address" placeholder="Địa chỉ" required value="@Session["address"]">
+                                    </div>
+                                    <div class="bor8 bg0 m-b-22">
+                                        <input class="stext-111 cl8 plh3 size-111 p-lr-15" type="text" name="phone" placeholder="Số điện thoại" required value="@Session["phone"]">
+                                    </div>
+                                    <div class="input-group">
+                                        <div class="flex-w flex-m m-r-20 m-tb-5">
+                                            <input class="stext-104 cl2 plh4 size-117 bor13 p-lr-20 m-r-10 m-tb-5 code" type="text" placeholder="Mã giảm giá" onclick="myfunction()">
+                                            <div class="input-group-append">
+                                                <button class="btn btn-outline-secondary coupon" type="button">Áp dụng</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @if (ViewBag.errormg != null)
+                                    {
+                                        <div class="row" id="error"><p style="color: red; font-size: 14px; padding: 10px;">@ViewBag.errormg</p></div>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex-w flex-t p-t-27 p-b-33">
+                            <div class="size-208">
+                                <span class="mtext-101 cl2">
+                                    Tổng tiền
+                                </span>
+                            </div>
+
+                            <div class="size-209 p-t-1">
+                                <span class="mtext-110 cl2" style="color:red;">
+                                    @(ViewBag.GrandTotal)đ
+                                </span>
+                            </div>
+                        </div>
+                        <div style="display:flex; justify-content:center">
+                            <input class="flex-c-m stext-101 cl0 bg3 bor14 hov-btn3 p-lr-15 trans-04 pointer console-log-success"
+                                   style="height:50px" type="button" value="Hủy thanh toán" onclick="location.href='@Url.Action("ShowToCart","Cart")'">
+                            <input class="flex-c-m stext-101 cl0 bg3 bor14 hov-btn3 p-lr-15 trans-04 pointer ml-4 mr-4"
+                                   style="height:50px" type="submit" name="ThanhToan" value="Thanh toán" onclick="location.href='@Url.Action("CheckOut","CheckOut")'">
+                            <input class="flex-c-m stext-101 cl0 bg3 bor14 hov-btn3 p-lr-15 trans-04 pointer"
+                                   style="height:50px" type="button" value="Tiếp tục mua hàng" onclick="location.href='@Url.Action("Index","Home")'">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+<script src="~/wwwroot/vendor/jquery/jquery-3.2.1.min.js"></script>
+<script>
+    $(function () {
+        $("button.coupon").click(function (e) {
+            e.preventDefault();
+            var couponCode = $("input.code").val();
+            var url = "/CheckOut/CheckOut";
+            $.get(url, { couponCode: couponCode }, function (data) {
+                
+            });
+            location.reload();
+        });
+    });
+
+    function myfunction() {
+        document.getElementById("error").style.display = "none";
+    }
+</script>

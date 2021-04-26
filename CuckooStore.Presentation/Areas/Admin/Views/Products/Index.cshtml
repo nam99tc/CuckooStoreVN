@@ -1,0 +1,75 @@
+﻿@model PagedList.IPagedList<CuckooStore.Models.Product>
+@using PagedList.Mvc;
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+<h2>Danh sách các sản phẩm</h2>
+<p>
+    @Html.ActionLink("Tạo sản phẩm mới", "Create")
+</p>
+<table class="table">
+    <tr class="d-flex">
+        <th class="col-md-2">
+            @Html.ActionLink("Tên danh mục", "Index", new { sortOrder = ViewBag.OrderFollowCategory })
+        </th>
+        <th class="col-md-3">
+            @Html.ActionLink("Tên sản phẩm", "Index", new { sortOrder = ViewBag.OrderFollowNamePro })
+        </th>
+        <th class="col-md-2">
+            Ảnh
+        </th>
+        <th class="col-md-1">
+            @Html.ActionLink("Màu sắc", "Index", new { sortOrder = ViewBag.OrderFollowColor })
+        </th>
+        <th class="col-md-2">
+            @Html.ActionLink("Giá", "Index", new { sortOrder = ViewBag.OrderFollowPrice })
+        </th>
+        <th class="col-md-1">
+            @Html.ActionLink("Số lượng", "Index", new { sortOrder = ViewBag.OrderFollowQty })
+        </th>
+        <th class="col-md-1"></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr class="d-flex">
+            <td class="col-md-2">
+                @Html.DisplayFor(modelItem => item.Category.CategoryName)
+            </td>
+            <td class="col-md-3">
+                @Html.DisplayFor(modelItem => item.ProductName)
+            </td>
+            <td class="col-md-2">
+                @{
+                string ImagePath = "~/wwwroot/Image/" + item.Image;
+                }
+                <img width="100" src="@Url.Content(ImagePath)" alt="Product" class="img-thumbnail" />
+                <br />
+            </td>
+            <td class="col-md-1">
+                @Html.DisplayFor(modelItem => item.MauSac)
+            </td>
+            <td class="col-md-2">
+                @Html.DisplayFor(modelItem => item.Price)
+            </td>
+            <td class="col-md-1">
+                @Html.DisplayFor(modelItem => item.Quantity)
+            </td>
+            <td class="col-md-1">
+                <form action="@Url.Action("Delete","Products", new { id= item.ProductID })" method="post">
+                    <a href="@Url.Action("Edit","Products", new { id=item.ProductID })" class="btn btn-primary">Sửa</a>
+                    <button type="submit" onclick="return confirm('Bạn có chắc muốn xóa sản phẩm này?');" class="btn btn-danger">Xóa</button>
+                </form>
+            </td>
+        </tr>
+    }
+
+</table>
+<p style="float:right">Trang @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageCount</p>
+<br />
+<hr />
+<div class="store-filter clearfix" style="display:flex;justify-content:center">
+    @Html.PagedListPager(Model, page => Url.Action("Index", "Products", new { page }))
+</div>

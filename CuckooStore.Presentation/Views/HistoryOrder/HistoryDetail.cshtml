@@ -1,0 +1,92 @@
+﻿@model CuckooStore.Models.Order
+<style>
+    #titel p {
+        color: red;
+        padding-bottom: 10px;
+        padding-top: 10px;
+        font-size: 20px;
+    }
+</style>
+@if (Model.OrderDetails.Count() <= 0)
+{
+    <p>Chưa có đơn hàng nào</p>
+}
+else
+{
+    <div class="tab-content p-t-43" style="color:black">
+        <!-- - -->
+        <div class="how-pos2 p-lr-15-md">
+            <div style="border:solid 0.5px;">
+                <nav id="navbar-example2" class="navbar navbar-light px-3" style="background-color:burlywood">
+                    <div style="display:flex; align-items:center;" class="container">
+                        <div style="float:left;">
+                            <a class="navbar-brand">Đơn hàng ngày:</a>&nbsp;&nbsp;&nbsp;
+                            <a class="navbar-brand" style="font-size:15px;">@Model.OrderDate</a>
+                        </div>
+                        @if (Model.Status.ToString().Equals("ChoXacNhan"))
+                        {
+                            <div style="float:right;">
+                                <input id="cancel" type="button" value="Hủy đơn" class="btn"
+                                       style="background-color:red; color:white;" onclick="location.href='@Url.Action("HuyDonHang", "HistoryOrder", new { id = Model.OrderID })'" />
+                            </div>
+                        }
+                        else
+                        {
+                            <div style="float:right;">
+                                <input id="cancel" type="button" value="Hủy đơn" class="btn"
+                                       style="background-color:darkgray; color:white;" onclick="location.href='@Url.Action("HuyDonHang", "HistoryOrder", new { id = Model.OrderID })'" />
+                            </div>
+                        }
+                    </div>
+                </nav>
+                <div class="col" id="titel">
+                    <div style="display:flex; align-items:center; justify-content:center">
+                        @if (Model.Status.ToString().Equals("ChoXacNhan"))
+                        {
+                            <p>Đang chờ xác nhận</p>
+                        }
+                        @if (Model.Status.ToString().Equals("DangGiao"))
+                        {
+                            <p>Đang giao hàng</p>
+                        }
+                        @if (Model.Status.ToString().Equals("DaNhan"))
+                        {
+                            <p>Đã nhận</p>
+                        }
+                        @if (Model.Status.ToString().Equals("DaHuy"))
+                        {
+                            <p>Đã hủy</p>
+                        }
+                    </div>
+                </div>
+                <div class="col">
+                    <div style="border-top: 1px solid #e6e6e6;">
+                        <div style="padding: 20px">
+                            <h4 style="padding-bottom: 10px;">Thông tin đơn hàng</h4>
+                            <p style="padding-bottom: 10px;"><strong>Họ tên: </strong>@Model.ToName</p>
+                            <p style="padding-bottom: 10px;"><strong>Số điện thoại: </strong>@Model.ToPhone</p>
+                            <p><strong>Địa chỉ nhận hàng: </strong>@Model.ToAddr</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div style="width:100%">
+                        @foreach (var item in Model.OrderDetails)
+                        {
+                            decimal total = Convert.ToDecimal(item.Product.UnitPrice * item.Quantity);
+                            <div class="media" style="border-bottom: 1px solid #e6e6e6;">
+                                <img class="align-self-start mr-3" src="~/wwwroot/Image/@(item.Product.Image)" alt="Generic placeholder image" height="150">
+                                <div style="padding-top: 30px;">
+                                    <h5 class="mt-0">@item.Product.ProductName</h5>
+                                    <p>Màu sắc: @item.Product.MauSac</p>
+                                    <p>x@(item.Quantity)</p>
+                                    <p style="color: red;">@total.ToString("0,0 VND")</p>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}

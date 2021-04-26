@@ -1,0 +1,97 @@
+﻿@model CuckooStore.Models.Order
+
+@{
+    ViewBag.Title = "IndexDetails";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+    decimal sumQuantity = (decimal)Model.OrderDetails.Sum(x => x.Quantity * x.Product.UnitPrice);
+}
+<div style="color:black;">
+    <h2>Thông tin đơn hàng</h2>
+    <p><strong>Họ Tên:</strong>&nbsp;&nbsp;@Model.ToName</p>
+    <p><strong>Số Điện Thoại:</strong>&nbsp;&nbsp;@Model.ToPhone</p>
+    <p><strong>Đại Chỉ:</strong>&nbsp;&nbsp;@Model.ToAddr</p>
+    <p><strong>Ngày Đặt:</strong>&nbsp;&nbsp;@Model.OrderDate</p>
+    <p><strong>Tổng Tiền:</strong>&nbsp;&nbsp;<span style="color:red">@sumQuantity.ToString("0,0 đ")</span></p>
+    <p>
+        <strong>Trạng Thái:</strong>&nbsp;&nbsp;
+        @if (Model.Status == Status.ChoXacNhan)
+        {
+            <span style="color: green">
+                Chờ xác nhận
+            </span>
+        }
+        @if (Model.Status == Status.DangGiao)
+        {
+            <span style="color: yellow">
+                Đang giao
+            </span>
+        }
+        @if (Model.Status == Status.DaHuy)
+        {
+            <span style="color: red">
+                Đã hủy
+            </span>
+        }
+        @if (Model.Status == Status.DaNhan)
+        {
+            <span>
+                Đã nhận
+            </span>
+        }
+    </p>
+</div>
+<table class="table" style="color:black">
+    <tr>
+
+        <th>
+            Tên sản phẩm
+        </th>
+        <th>
+            Ảnh
+        </th>
+        <th>
+            Màu sắc
+        </th>
+        <th>
+            Số lượng
+        </th>
+        <th>
+            Giá
+        </th>
+        <th>
+            Tổng
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model.OrderDetails)
+    {
+        decimal total = (decimal)item.Product.Price * item.Quantity;
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Product.ProductName)
+            </td>
+            <td>
+                @{
+                    string ImagePath = "~/wwwroot/Image/" + item.Product.Image;
+                }
+                <img width="100" src="@Url.Content(ImagePath)" alt="Product" class="img-thumbnail" />
+                <br />
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Product.MauSac)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Quantity)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Product.UnitPrice)
+            </td>
+            <td>
+                @total.ToString("0,0 đ")
+            </td>
+        </tr>
+        total = 0;
+    }
+
+</table>

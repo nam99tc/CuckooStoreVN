@@ -1,0 +1,248 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Product</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/png" href="~/wwwroot/images/icons/favicon.png" />
+    <link rel="stylesheet" type="text/css" href="~/wwwroot/vendor/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="~/wwwroot/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="~/wwwroot/fonts/iconic/css/material-design-iconic-font.min.css">
+    <link rel="stylesheet" type="text/css" href="~/wwwroot/fonts/linearicons-v1.0.0/icon-font.min.css">
+    <link rel="stylesheet" type="text/css" href="~/wwwroot/vendor/animate/animate.css">
+    <link rel="stylesheet" type="text/css" href="~/wwwroot/vendor/css-hamburgers/hamburgers.min.css">
+    <link rel="stylesheet" type="text/css" href="~/wwwroot/vendor/animsition/css/animsition.min.css">
+    <link rel="stylesheet" type="text/css" href="~/wwwroot/vendor/select2/select2.min.css">
+    <link rel="stylesheet" type="text/css" href="~/wwwroot/vendor/daterangepicker/daterangepicker.css">
+    <link rel="stylesheet" type="text/css" href="~/wwwroot/vendor/slick/slick.css">
+    <link rel="stylesheet" type="text/css" href="~/wwwroot/vendor/MagnificPopup/magnific-popup.css">
+    <link rel="stylesheet" type="text/css" href="~/wwwroot/vendor/perfect-scrollbar/perfect-scrollbar.css">
+    <link rel="stylesheet" type="text/css" href="~/wwwroot/css/util.css">
+    <link rel="stylesheet" type="text/css" href="~/wwwroot/css/main.css">
+</head>
+<body class="animsition">
+
+    <!-- Header -->
+    <header class="header-v4">
+        <!-- Header desktop -->
+        <div class="container-menu-desktop">
+            <!-- Topbar -->
+            <div class="top-bar">
+                <div class="content-topbar flex-sb-m h-full container">
+                    <div class="left-top-bar">
+                        Đặt hàng ngày rinh quà liền tay...
+                    </div>
+                    @if (Session["Hoten"] != null)
+                    {
+                        <div class="right-top-bar flex-w h-full">
+                            @Html.ActionLink(Session["Hoten"].ToString(), "Edit", new { id = Session["iduser"] }, new { @class = "flex-c-m trans-04 p-lr-25", @style = "color: white;" })
+                            <a href="@Url.Action("Logout", "Home")" class="flex-c-m trans-04 p-lr-25" style="color: white">
+                                Đăng Xuất
+                            </a>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="right-top-bar flex-w h-full">
+                            <a href="@Url.Action("Login","Home")" class="flex-c-m trans-04 p-lr-25" style="color: white">
+                                Đăng Nhập
+                            </a>
+                            <a href="@Url.Action("Register","Home")" class="flex-c-m trans-04 p-lr-25" style="color: white">
+                                Đăng ký
+                            </a>
+                        </div>
+                    }
+                </div>
+            </div>
+            <div class="wrap-menu-desktop how-shadow1">
+                <nav class="limiter-menu-desktop container">
+
+                    <!-- Logo desktop -->
+                    <a href="#" class="logo">
+                        <img src="~/wwwroot/images/icons/logo.png" alt="IMG-LOGO">
+                    </a>
+                    <!-- Menu desktop -->
+                    <div class="menu-desktop">
+                        <ul class="main-menu">
+                            <li>
+                                <a href="@Url.Action("Index","Home")">Trang Chủ</a>
+                            </li>
+                            <li class="label1" data-label1="hot">
+                                <a href="@Url.Action("ShowToCart","Cart")">Giỏ Hàng</a>
+                            </li>
+                            @if (Session["iduser"] != null)
+                            {
+                                <li>
+                                    <a href="@Url.Action("Edit","Home",new { id=Session["iduser"]})">Tài Khoản</a>
+                                </li>
+                                <li>
+                                    <a href="@Url.Action("Index","HistoryOrder")">Lịch sử đặt hàng</a>
+                                </li>
+                            }
+                            <li>
+                                <a href="@Url.Action("About","Home")">Về Chúng Tôi</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <!-- Icon header -->
+                    <div class="wrap-icon-header flex-w flex-r-m">
+                        <div class="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 js-show-modal-search">
+                            <i class="zmdi zmdi-search"></i>
+                        </div>
+                        @if (Convert.ToInt32(Session["value"]) == 0)
+                        {
+                            <div class="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 icon-header-noti js-show-cart" data-notify="0">
+                                <i class="zmdi zmdi-shopping-cart"></i>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 icon-header-noti js-show-cart" data-notify="@Session["value"]">
+                                <i class="zmdi zmdi-shopping-cart"></i>
+                            </div>
+                        }
+                    </div>
+                </nav>
+            </div>
+        </div>
+        <!-- Modal Search -->
+        <div class="modal-search-header flex-c-m trans-04 js-hide-modal-search">
+            <div class="container-search-header">
+                <button class="flex-c-m btn-hide-modal-search trans-04 js-hide-modal-search">
+                    <img src="~/wwwroot/images/icons/icon-close2.png" alt="CLOSE">
+                </button>
+                <form class="wrap-search-header flex-w p-l-15">
+                    <button class="flex-c-m trans-04">
+                        <i class="zmdi zmdi-search"></i>
+                    </button>
+                    <input class="plh3" type="text" name="search" placeholder="Search...">
+                </form>
+            </div>
+        </div>
+    </header>
+    @{
+        Html.RenderAction("ViewCart", "Cart");
+    }
+    <!-- Product -->
+    <div class="bg0 m-t-23 p-b-140">
+        <div class="container">
+            @RenderBody()
+        </div>
+    </div>
+    <!-- Footer -->
+    @{
+        Html.RenderAction("Footer", "Home");
+    }
+    <!-- Back to top -->
+    <div class="btn-back-to-top" id="myBtn">
+        <span class="symbol-btn-back-to-top">
+            <i class="zmdi zmdi-chevron-up"></i>
+        </span>
+    </div>
+    <script src="~/wwwroot/vendor/jquery/jquery-3.2.1.min.js"></script>
+    <script src="~/wwwroot/vendor/animsition/js/animsition.min.js"></script>
+    <script src="~/wwwroot/vendor/bootstrap/js/popper.js"></script>
+    <script src="~/wwwroot/vendor/bootstrap/js/bootstrap.min.js"></script>
+    <script src="~/wwwroot/vendor/select2/select2.min.js"></script>
+    <script>
+        $(".js-select2").each(function () {
+            $(this).select2({
+                minimumResultsForSearch: 20,
+                dropdownParent: $(this).next('.dropDownSelect2')
+            });
+        })
+    </script>
+    <script src="~/wwwroot/vendor/daterangepicker/moment.min.js"></script>
+    <script src="~/wwwroot/vendor/daterangepicker/daterangepicker.js"></script>
+    <script src="~/wwwroot/vendor/slick/slick.min.js"></script>
+    <script src="~/wwwroot/js/slick-custom.js"></script>
+    <script src="~/wwwroot/vendor/parallax100/parallax100.js"></script>
+    <script>$('.parallax100').parallax100();</script>
+    <script src="~/wwwroot/vendor/MagnificPopup/jquery.magnific-popup.min.js"></script>
+    <script>
+        $('.gallery-lb').each(function () { // the containers for all your galleries
+            $(this).magnificPopup({
+                delegate: 'a', // the selector for gallery item
+                type: 'image',
+                gallery: {
+                    enabled: true
+                },
+                mainClass: 'mfp-fade'
+            });
+        });
+    </script>
+    <script src="~/wwwroot/vendor/isotope/isotope.pkgd.min.js"></script>
+    <script src="~/wwwroot/vendor/sweetalert/sweetalert.min.js"></script>
+    <script>
+        $('.js-addwish-b2').on('click', function (e) {
+            e.preventDefault();
+        });
+
+        $('.js-addwish-b2').each(function () {
+            var nameProduct = $(this).parent().parent().find('.js-name-b2').html();
+            $(this).on('click', function () {
+                swal(nameProduct, "is added to wishlist !", "success");
+
+                $(this).addClass('js-addedwish-b2');
+                $(this).off('click');
+            });
+        });
+
+        $('.js-addwish-detail').each(function () {
+            var nameProduct = $(this).parent().parent().parent().find('.js-name-detail').html();
+
+            $(this).on('click', function () {
+                swal(nameProduct, "is added to wishlist !", "success");
+
+                $(this).addClass('js-addedwish-detail');
+                $(this).off('click');
+            });
+        });
+
+        /*---------------------------------------------*/
+
+        $('.js-addcart-detail').each(function () {
+            var nameProduct = $(this).parent().parent().parent().parent().find('.js-name-detail').html();
+            $(this).on('click', function () {
+                swal(nameProduct, "Thêm sản phẩm thành công !", "success");
+            });
+        });
+
+        $('.js-addcart-success').each(function () {
+            var nameProduct = $(this).parent().parent().parent().parent();
+            $(this).on('click', function () {
+                swal(nameProduct, "Đặt hàng thành công !", "success");
+            });
+        });
+        $('.console-log-checkout-false').on('click', function () {
+            alert("Bạn cần có sản phẩm trong giỏ hàng!");
+        });
+
+        $('.console-log').on('click', function () {
+            alert("Bạn cần đăng nhập để mua hàng!");
+        });
+        $('.console-log-success').on('click', function () {
+            alert("Tác vụ thành công!");
+        });
+        document.getElementById("email").onclick = function () {
+            document.getElementById("erMail").style.display = 'none';
+        }
+    </script>
+    <script src="~/wwwroot/vendor/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+    <script>
+        $('.js-pscroll').each(function () {
+            $(this).css('position', 'relative');
+            $(this).css('overflow', 'hidden');
+            var ps = new PerfectScrollbar(this, {
+                wheelSpeed: 1,
+                scrollingThreshold: 1000,
+                wheelPropagation: false,
+            });
+
+            $(window).on('resize', function () {
+                ps.update();
+            })
+        });</script>
+    <script src="~/wwwroot/js/main.js"></script>
+</body>
+</html>

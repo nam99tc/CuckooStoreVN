@@ -1,0 +1,19 @@
+﻿
+@{
+    ViewBag.Title = "CheckOutSuccess";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container" style="height: 100%;">
+    <div style="display:flex; align-items:center; justify-content:center">
+        <p style="font-size:20px;">Đặt hàng thành công!</p>
+    </div>
+    <div style="display:flex; align-items:center; justify-content:center">
+        <img style="margin-top:30px" src="~/wwwroot/images/icons/EmtyCart.png" />
+    </div>
+    <div>
+        <input class="flex-c-m stext-101 cl0 bg3 bor14 hov-btn3 p-lr-15 trans-04 pointer"
+               style="height:35px" type="button" value="Tiếp tục mua hàng" onclick="location.href='@Url.Action("Index","Home")'">
+    </div>
+</div>
+

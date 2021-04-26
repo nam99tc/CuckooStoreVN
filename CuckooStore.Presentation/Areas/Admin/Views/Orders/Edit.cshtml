@@ -1,0 +1,71 @@
+﻿@model CuckooStore.Models.Order
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <h4>Xác nhận trạng thái đơn hàng</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.OrderID)
+
+        <div class="form-group">
+            <b>@Html.LabelFor(model => model.OrderDate, htmlAttributes: new { @class = "control-label col-md-2", @style = "color: black" })</b>
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.OrderDate, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.OrderDate, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <b>@Html.LabelFor(model => model.Status, htmlAttributes: new { @class = "control-label col-md-2", @style = "color: black" })</b>
+            <div class="col-md-10">
+                @Html.EnumDropDownListFor(model => model.Status, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Status, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <b>@Html.LabelFor(model => model.ToName, htmlAttributes: new { @class = "control-label col-md-2", @style = "color: black" })</b>
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.ToName, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.ToName, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <b>@Html.LabelFor(model => model.ToAddr, htmlAttributes: new { @class = "control-label col-md-2", @style = "color: black" })</b>
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.ToAddr, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.ToAddr, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <b>@Html.LabelFor(model => model.ToPhone, htmlAttributes: new { @class = "control-label col-md-2", @style = "color: black" })</b>
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.ToPhone, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.ToPhone, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <b>@Html.LabelFor(model => model.Code, "Mã giảm giá", htmlAttributes: new { @class = "control-label col-md-2", @style = "color: black" })</b>
+            <div class="col-md-10">
+                @Html.DropDownList("Code", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Code, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <button class="btn btn-default" style="background-color:lightskyblue; width:auto; height:auto">Xác Nhận</button> | @Html.ActionLink("Quay Lại", "Index")
+            </div>
+        </div>
+    </div>
+}

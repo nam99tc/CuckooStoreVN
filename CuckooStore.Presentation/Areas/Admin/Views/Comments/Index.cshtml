@@ -1,0 +1,55 @@
+﻿@model PagedList.IPagedList<CuckooStore.Models.Comment>
+@using PagedList.Mvc;
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+<h2>Danh sách các bình luận</h2>
+<table class="table">
+    <tr class="d-flex">
+        <th class="col-md-3">
+            @Html.ActionLink("Tên sản phẩm","Index", new { sortOrder = ViewBag.OrderFollowProduct })
+        </th>
+        <th class="col-md-2">
+            @Html.ActionLink("Tên người dùng", "Index", new { sortOrder = ViewBag.OrderFollowUser })
+        </th>
+        <th class="col-md-4">
+            Nội dung
+        </th>
+        <th class="col-md-2">
+            @Html.ActionLink("Thời gian", "Index", new { sortOrder = ViewBag.OrderFollowTime })
+        </th>
+        <th class="col-md-1"></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr class="d-flex">
+            <td class="col-md-3">
+                @Html.DisplayFor(modelItem => item.Product.ProductName)
+            </td>
+            <td class="col-md-2">
+                @Html.DisplayFor(modelItem => item.User.FullName)
+            </td>
+            <td class="col-md-4">
+                @Html.DisplayFor(modelItem => item.Content)
+            </td>
+            <td class="col-md-2">
+                @Html.DisplayFor(modelItem => item.CommentDate)
+            </td>
+            <td class="col-md-1">
+                <form action="@Url.Action("Delete","Products", new { id= item.CommentID })" method="post">
+                    <button type="submit" onclick="return confirm('Bạn có chắc muốn xóa bình luận này?');" class="btn btn-danger">Xóa</button>
+                </form>
+            </td>
+        </tr>
+    }
+
+</table>
+<p style="float:right">Trang @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageCount</p>
+<br />
+<hr />
+<div class="store-filter clearfix" style="display:flex;justify-content:center">
+    @Html.PagedListPager(Model, page => Url.Action("Index", "Comments", new { page }))
+</div>

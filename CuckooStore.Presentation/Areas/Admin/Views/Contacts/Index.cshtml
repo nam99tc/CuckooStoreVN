@@ -1,0 +1,47 @@
+﻿@model PagedList.IPagedList<CuckooStore.Models.Contact>
+@using PagedList.Mvc;
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+<h2>Danh sách phản hồi</h2>
+<table class="table">
+    <tr class="d-flex">
+        <th class="col-md-4">
+            Họ tên
+        </th>
+        <th class="col-md-3">
+            Email
+        </th>
+        <th class="col-md-3">
+            Ngày
+        </th>
+        <th class="col-md-2"></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr class="d-flex">
+            <td  class="col-md-4">
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td  class="col-md-3">
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td  class="col-md-3">
+                @Html.DisplayFor(modelItem => item.Date)
+            </td>
+            <td class="col-md-2">
+                <a href="@Url.Action("Details","Contacts", new { id=item.ContactID })" class="btn btn-primary">Chi tiết</a>
+            </td>
+        </tr>
+    }
+
+</table>
+<p style="float:right">Trang @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageCount</p>
+<br />
+<hr />
+<div class="store-filter clearfix" style="display:flex;justify-content:center">
+    @Html.PagedListPager(Model, page => Url.Action("Index", "Products", new { page }))
+</div>
