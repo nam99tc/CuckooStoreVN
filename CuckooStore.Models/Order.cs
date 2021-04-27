@@ -57,7 +57,7 @@ namespace CuckooStore.Models
         //Total Cart
         public double Total_Money()
         {
-            var total = OrderDetails.Sum(s => s.Product.Price * s.Quantity);
+            var total = OrderDetails.Sum(s => s.Product.UnitPrice * s.Quantity);
             return (double)total;
         }
     }

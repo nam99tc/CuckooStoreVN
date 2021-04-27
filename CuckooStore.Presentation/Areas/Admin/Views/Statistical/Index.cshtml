@@ -1,8 +1,77 @@
-﻿
+﻿@model IEnumerable<CuckooStore.Models.Order>
 @{
     ViewBag.Title = "Index";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+    decimal money = (decimal)Session["Statistical"];
 }
 
-<h2>Index</h2>
+<h2 style="margin-bottom: 20px; color:black">Thống kê doanh thu</h2>
+<form action="~/Admin/Statistical/Index" method="post">
+    <table style="color:black">
+        <tr>
+            <th style="padding-right:200px">
+                Ngày bắt đầu
+            </th>
+            <th style="padding-right:400px">
+                Ngày kết thúc
+            </th>
+            <th>
+                Tổng doanh thu
+            </th>
+        </tr>
+        <tr>
+            <td>
+                <input type="date" name="begindate" />
+            </td>
+            <td>
+                <input type="date" name="enddate" />
+            </td>
+            <td>
+                <span style="color:red; font-size:30px"><strong>@money.ToString("0,0 đ")</strong></span>
+            </td>
+        </tr>
+    </table>
+    <br />
+    <button class="btn btn-success" type="submit">Thống kê</button>
+</form>
+<br />
+<table class="table" style="color:black">
+    <tr>
+        <th>
+            Tên người nhận
+        </th>
+        <th>
+            Ngày đặt
+        </th>
+        <th>
+            Tổng số sản phẩm
+        </th>
+        <th>
+            Tổng tiền
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        decimal sumQuantity = (decimal)item.OrderDetails.Sum(x => x.Quantity * x.Product.UnitPrice);
+        int Sumqty = item.OrderDetails.Sum(x => x.Quantity);
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ToName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.OrderDate)
+            </td>
+            <td>
+                @Sumqty
+            </td>
+            <td>
+                @sumQuantity.ToString("0,0 đ")
+            </td>
+        </tr>
+        sumQuantity = 0;
+    }
+
+</table>
 

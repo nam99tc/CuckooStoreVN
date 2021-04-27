@@ -88,13 +88,22 @@
                     <span>Liên hệ</span>
                 </a>
             </li>
-            <!-- Divider -->
+            <!-- Nav Item - Pages Collapse Menu -->
             <hr class="sidebar-divider">
             <li class="nav-item">
-                <a class="nav-link" href="@Url.Action("Index","Statistical")">
-                    <i class="fas fa-fw fa-boxes"></i>
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
+                   aria-expanded="true" aria-controls="collapsePages">
+                    <i class="fas fa-fw fa-folder"></i>
                     <span>Thống kê</span>
                 </a>
+                <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <a class="collapse-item" href="@Url.Action("Index","Statistical")">Thống kê theo tháng</a>
+                        <a class="collapse-item" href="@Url.Action("StatiscalFollowOrder","Statistical")">Thống kê theo hóa đơn</a>
+                        <a class="collapse-item" href="forgot-password.html">Thống kê theo sản phẩm</a>
+                        <a class="collapse-item" href="forgot-password.html">Thống kê theo danh mục</a>
+                    </div>
+                </div>
             </li>
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">
