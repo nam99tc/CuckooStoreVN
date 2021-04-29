@@ -14,6 +14,10 @@ namespace CuckooStore.Presentation.Areas.Admin.Controllers
         // GET: Admin/HomeAdmin
         public ActionResult Index()
         {
+            if (Session["iduserAdmin"] == null)
+            {
+                return RedirectToAction("Login", "HomeAdmin", new { area = "Admin" });
+            }
             return View();
         }
         public ActionResult LogOut()

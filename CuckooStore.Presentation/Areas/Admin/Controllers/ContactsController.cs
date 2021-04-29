@@ -17,6 +17,10 @@ namespace CuckooStore.Presentation.Areas.Admin.Controllers
         // GET: Admin/Contacts
         public async Task<ActionResult> Index(int? page)
         {
+            if (Session["iduserAdmin"] == null)
+            {
+                return RedirectToAction("Login", "HomeAdmin", new { area = "Admin" });
+            }
             int pageSize = 10;
             int pageNumber = (page ?? 1);
             var contacts = await _contact.GetAllAsync();

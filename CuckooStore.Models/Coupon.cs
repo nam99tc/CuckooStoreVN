@@ -19,7 +19,7 @@ namespace CuckooStore.Models
 
         [DisplayName("Phần trăm giảm giá")]
         [Required(ErrorMessage = "Phần trăm giảm giá không được để trống")]
-        public decimal Discount { get; set; }
+        public int Discount { get; set; }
 
         [DisplayName("Mô tả")]
         public string Description { get; set; }

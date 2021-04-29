@@ -17,38 +17,45 @@ namespace CuckooStore.Presentation.Areas.Admin.Controllers
         // GET: Admin/Comments
         public async Task<ActionResult> Index(int? page, string sortOrder)
         {
-            //sap xep
-            ViewBag.OrderFollowProduct = String.IsNullOrEmpty(sortOrder) ? "pro_desc" : "";
-            ViewBag.OrderFollowUser = sortOrder == "user_asc" ? "user_desc" : "user_asc";
-            ViewBag.OrderFollowTime = sortOrder == "time_asc" ? "time_desc" : "time_asc";
-
-            var comments = await _comment.GetAllAsync();
-            switch (sortOrder)
+            if (Session["iduserAdmin"] == null)
             {
-                case "pro_desc":
-                    comments = comments.OrderByDescending(x => x.Product.ProductName);
-                    break;
-                case "user_desc":
-                    comments = comments.OrderByDescending(x => x.User.FullName);
-                    break;
-                case "user_asc":
-                    comments = comments.OrderBy(x => x.User.FullName);
-                    break;
-                case "time_desc":
-                    comments = comments.OrderByDescending(x => x.CommentDate);
-                    break;
-                case "time_asc":
-                    comments = comments.OrderBy(x => x.CommentDate);
-                    break;
-                default:
-                    comments = comments.OrderBy(x => x.Product.ProductName);
-                    break;
+                return RedirectToAction("Login", "HomeAdmin", new { area = "Admin" });
             }
+            else
+            {
+                //sap xep
+                ViewBag.OrderFollowProduct = String.IsNullOrEmpty(sortOrder) ? "pro_desc" : "";
+                ViewBag.OrderFollowUser = sortOrder == "user_asc" ? "user_desc" : "user_asc";
+                ViewBag.OrderFollowTime = sortOrder == "time_asc" ? "time_desc" : "time_asc";
 
-            //phan trang
-            int pageSize = 10;
-            int pageNumber = (page ?? 1);
-            return View(comments.ToPagedList(pageNumber, pageSize));
+                var comments = await _comment.GetAllAsync();
+                switch (sortOrder)
+                {
+                    case "pro_desc":
+                        comments = comments.OrderByDescending(x => x.Product.ProductName);
+                        break;
+                    case "user_desc":
+                        comments = comments.OrderByDescending(x => x.User.FullName);
+                        break;
+                    case "user_asc":
+                        comments = comments.OrderBy(x => x.User.FullName);
+                        break;
+                    case "time_desc":
+                        comments = comments.OrderByDescending(x => x.CommentDate);
+                        break;
+                    case "time_asc":
+                        comments = comments.OrderBy(x => x.CommentDate);
+                        break;
+                    default:
+                        comments = comments.OrderBy(x => x.Product.ProductName);
+                        break;
+                }
+
+                //phan trang
+                int pageSize = 10;
+                int pageNumber = (page ?? 1);
+                return View(comments.ToPagedList(pageNumber, pageSize));
+            }
         }
 
         [HttpPost]

@@ -16,6 +16,10 @@ namespace CuckooStore.Presentation.Areas.Admin.Controllers
         // GET: Admin/Categories
         public async Task<ActionResult> Index()
         {
+            if (Session["iduserAdmin"] == null)
+            {
+                return RedirectToAction("Login", "HomeAdmin", new { area = "Admin" });
+            }
             var category = await _category.GetAllAsync();
             return View(category);
         }

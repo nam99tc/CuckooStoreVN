@@ -177,10 +177,6 @@
     <Content Include="Areas\Admin\wwwroot\img\undraw_profile_2.svg" />
     <Content Include="Areas\Admin\wwwroot\img\undraw_profile_3.svg" />
     <Content Include="Areas\Admin\wwwroot\img\undraw_rocket.svg" />
-    <Content Include="Areas\Admin\wwwroot\js\demo\chart-area-demo.js" />
-    <Content Include="Areas\Admin\wwwroot\js\demo\chart-bar-demo.js" />
-    <Content Include="Areas\Admin\wwwroot\js\demo\chart-pie-demo.js" />
-    <Content Include="Areas\Admin\wwwroot\js\demo\datatables-demo.js" />
     <Content Include="Areas\Admin\wwwroot\js\sb-admin-2.js" />
     <Content Include="Areas\Admin\wwwroot\js\sb-admin-2.min.js" />
     <Content Include="Areas\Admin\wwwroot\vendor\bootstrap\js\bootstrap.bundle.js" />

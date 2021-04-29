@@ -60,5 +60,25 @@ namespace CuckooStore.Models
             var total = OrderDetails.Sum(s => s.Product.UnitPrice * s.Quantity);
             return (double)total;
         }
+        public decimal Sumtotal
+        {
+            get
+            {
+                decimal sum = 0m;
+                foreach (var item in OrderDetails)
+                {
+                    sum += (decimal)item.Product.UnitPrice * item.Quantity;
+                }
+                if (Coupon != null)
+                {
+                    sum -= (Coupon.Discount * sum) / 100;
+                    return sum;
+                }
+                else
+                {
+                    return sum;
+                }
+            }
+        }
     }
 }

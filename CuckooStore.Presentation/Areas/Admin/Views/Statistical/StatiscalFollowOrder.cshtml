@@ -1,4 +1,4 @@
-﻿
+﻿@model IEnumerable<CuckooStore.Presentation.Areas.Admin.Controllers.StatisticalController.ListPro>
 @{
     ViewBag.Title = "StatiscalFollowOrder";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
@@ -8,58 +8,74 @@
     <!-- Content Row -->
     <div class="row">
         <div class="col-xl-8 col-lg-7">
-            <!-- Area Chart -->
-            <div class="card shadow mb-4">
-                <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold text-primary">Area Chart</h6>
-                </div>
-                <div class="card-body">
-                    <div class="chart-area">
-                        <canvas id="myAreaChart"></canvas>
-                    </div>
-                    <hr>
-                    Styling for the area chart can be found in the
-                    <code>/js/demo/chart-area-demo.js</code> file.
-                </div>
-            </div>
             <!-- Bar Chart -->
             <div class="card shadow mb-4">
                 <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold text-primary">Bar Chart</h6>
+                    <h6 class="m-0 font-weight-bold text-primary">Biểu đồ cột</h6>
                 </div>
                 <div class="card-body">
                     <div class="chart-bar">
                         <canvas id="myBarChart"></canvas>
                     </div>
-                    <hr>
-                    Styling for the bar chart can be found in the
-                    <code>/js/demo/chart-bar-demo.js</code> file.
-                </div>
-            </div>
-        </div>
-        <!-- Donut Chart -->
-        <div class="col-xl-4 col-lg-5">
-            <div class="card shadow mb-4">
-                <!-- Card Header - Dropdown -->
-                <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold text-primary">Donut Chart</h6>
-                </div>
-                <!-- Card Body -->
-                <div class="card-body">
-                    <div class="chart-pie pt-4">
-                        <canvas id="myPieChart"></canvas>
-                    </div>
-                    <hr>
-                    Styling for the donut chart can be found in the
-                    <code>/js/demo/chart-pie-demo.js</code> file.
                 </div>
             </div>
         </div>
     </div>
 </div>
-<!-- Page level plugins -->
+<table class="table">
+    <tr class="d-flex">
+        <td class="col-md-4"><strong>Tên</strong></td>
+        <td class="col-md-3"><strong>Ảnh</strong></td>
+        <td class="col-md-2"><strong>Số lượng đã bán</strong></td>
+        <td class="col-md-3"><strong>Giá</strong></td>
+    </tr>
+    @foreach (var item in Model)
+    {
+        string ImagePath = "~/wwwroot/Image/" + item.Image;
+        <tr class="d-flex">
+            <td class="col-md-4">@item.Name</td>
+            <td class="col-md-3">
+                <img width="50" src="@Url.Content(ImagePath)" alt="anh" class="img-thumbnail" />
+            </td>
+            <td class="col-md-2">@item.TotalQty</td>
+            <td class="col-md-3">@item.TotalMoney.ToString("0,0 đ")</td>
+        </tr>
+    }
+</table>
+
+<script src="~/Areas/Admin/wwwroot/vendor/chart.js/Chart.js"></script>
 <script src="~/Areas/Admin/wwwroot/vendor/chart.js/Chart.min.js"></script>
-<!-- Page level custom scripts -->
-<script src="~/Areas/Admin/wwwroot/js/demo/chart-area-demo.js"></script>
-<script src="~/Areas/Admin/wwwroot/js/demo/chart-pie-demo.js"></script>
-<script src="~/Areas/Admin/wwwroot/js/demo/chart-bar-demo.js"></script>
+<script type="text/javascript">
+
+     var images = @Html.Raw(Json.Encode(ViewBag.IMAGE));
+     var qty = @Html.Raw(Json.Encode(ViewBag.QTY));
+
+     var barchar = document.getElementById("myBarChart");
+
+     var myBarChart = new Chart(barchar, {
+
+         type: 'bar',
+         data: {
+             labels: images,
+             datasets: [{
+                 label: "Số lượng",
+                 data: qty,
+                 backgroundColor: "#4e73df",
+                 hoverBackgroundColor: "#2e59d9",
+                 borderColor: "#4e73df",
+             }]
+         },
+         options: {
+             maintainAspectRatio: false,
+             scales: {
+                 yAxes: [{
+                     ticks: {
+                         beginAtZero:true,
+                         maxTicksLimit: 10
+                     }
+                 }]
+             }
+         },
+
+     });
+</script>

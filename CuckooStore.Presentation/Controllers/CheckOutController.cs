@@ -116,6 +116,12 @@ namespace CuckooStore.Presentation.Controllers
             List<OrderDetail> ord = new List<OrderDetail>();
             foreach (var item in cart.Items)
             {
+                var pro = _productServices.GetById(item._product.ProductID);
+                if (item._quatity > pro.Quantity)
+                {
+                    ViewBag.Er = "Sản phẩm " + pro.ProductName + " chỉ còn " + pro.Quantity+"!! Vui lòng cập nhật lại số lượng";
+                    return View(cart);
+                }
                 var orderDetail = new OrderDetail()
                 {
                     OrderID = order.OrderID,

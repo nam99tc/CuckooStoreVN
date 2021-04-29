@@ -28,37 +28,43 @@ namespace CuckooStore.Presentation.Controllers
             // insert single CartItem in Cart.
             int id = Convert.ToInt32(fc["id"]);
             int quantity = Convert.ToInt32(fc["quantity"]);
-
             var pro = db.Products.FirstOrDefault(x => x.ProductID == id);
-            //check order-detail
-            if (pro != null)
-            {
-                GetCart().Add(pro, quantity);
-            }
-            Cart cart = Session["Cart"] as Cart;
-            if (cart == null)
-            {
-                Session["value"] = 0;
 
-            }
-            else
+            if (ModelState.IsValid)
             {
-                Session["value"] = cart.Items.Count();
+                if (quantity > pro.Quantity)
+                {
+                    Session["ErrQuantity"] = "Số lượng trong kho không đủ!!";
+                }
+                else
+                {
+                    Session["ErrQuantity"] = null;
+                    if (pro != null)
+                    {
+                        GetCart().Add(pro, quantity);
+                    }
+                    Cart cart = Session["Cart"] as Cart;
+                    if (cart == null)
+                    {
+                        Session["value"] = 0;
 
+                    }
+                    else
+                    {
+                        Session["value"] = cart.Items.Count();
+                    }
+                    return RedirectToAction("ShowToCart", "Cart");
+                }
             }
-            return RedirectToAction("ShowToCart", "Cart");
+            return RedirectToAction("Details", "Home",new { id = pro.ProductID });
         }
         //Trang gio hang
         public ActionResult ShowToCart()
         {
             Cart cart = Session["Cart"] as Cart;
-            if (cart.Items.Count() <= 0)
-            {
-                return PartialView("EmtyCart");
-            }
             return View(cart);
         }
-        
+
         //View Icon Cart
         public PartialViewResult ViewCart()
         {
@@ -76,8 +82,17 @@ namespace CuckooStore.Presentation.Controllers
                 int dem = 0;
                 foreach (var item in cart.Items)
                 {
+                    var pro = db.Products.FirstOrDefault(x => x.ProductID == item._product.ProductID);
+                    if (Convert.ToInt32(quantities[dem]) > pro.Quantity)
+                    {
+                        Session["err"] = pro.ProductName+" không đủ " + Convert.ToInt32(quantities[dem]) +" trong kho!!";
+                        Session["proErr"] = pro.ProductID;
+                        return RedirectToAction("ShowToCart", "Cart");
+                    }
                     item._quatity = Convert.ToInt32(quantities[dem]);
                     dem++;
+                    Session["err"] = null;
+                    Session["proErr"] = null;
                 }
             }
             if (cart == null)

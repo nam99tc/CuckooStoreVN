@@ -66,6 +66,9 @@ else
                             <p style="padding-bottom: 10px;"><strong>Họ tên: </strong>@Model.ToName</p>
                             <p style="padding-bottom: 10px;"><strong>Số điện thoại: </strong>@Model.ToPhone</p>
                             <p><strong>Địa chỉ nhận hàng: </strong>@Model.ToAddr</p>
+                            <p><strong>Tổng tiền: </strong>@Model.Total_Money().ToString("0,0 đ")</p>
+                            <p><strong>Giảm giá: </strong>@Model.Coupon.Discount %</p>
+                            <p><strong>Thành tiền: </strong>@Model.Sumtotal.ToString("0,0 đ")</p>
                         </div>
                     </div>
                 </div>
@@ -80,7 +83,7 @@ else
                                     <h5 class="mt-0">@item.Product.ProductName</h5>
                                     <p>Màu sắc: @item.Product.MauSac</p>
                                     <p>x@(item.Quantity)</p>
-                                    <p style="color: red;">@total.ToString("0,0 VND")</p>
+                                    <p style="color: red;">@total.ToString("0,0 đ")</p>
                                 </div>
                             </div>
                         }

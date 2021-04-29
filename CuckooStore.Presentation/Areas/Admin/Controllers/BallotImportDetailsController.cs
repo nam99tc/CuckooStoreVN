@@ -28,6 +28,10 @@ namespace CuckooStore.Presentation.Areas.Admin.Controllers
         // GET: Admin/BallotImportDetails
         public ActionResult Index(int? id)
         {
+            if (Session["iduserAdmin"] == null)
+            {
+                return RedirectToAction("Login", "HomeAdmin", new { area = "Admin" });
+            }
             var ballotImport = _ballotImport.GetById(id);
             Session["idBallot"] = id;
             return View(ballotImport);

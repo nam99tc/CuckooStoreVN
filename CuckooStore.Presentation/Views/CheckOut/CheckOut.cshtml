@@ -119,13 +119,18 @@
                                     {
                                         <div class="row" id="error"><p style="color: red; font-size: 14px; padding: 10px;">@ViewBag.errormg</p></div>
                                     }
+                                    @if (ViewBag.Er != null)
+                                    {
+                                        <div class="row" id="error"><p style="color: red; font-size: 14px; padding: 10px;">@ViewBag.Er</p></div>
+                                    }
                                 </div>
                             </div>
                         </div>
+
                         <div class="flex-w flex-t p-t-27 p-b-33">
                             <div class="size-208">
                                 <span class="mtext-101 cl2">
-                                    Tổng tiền
+                                    Thành tiền
                                 </span>
                             </div>
 
@@ -136,9 +141,9 @@
                             </div>
                         </div>
                         <div style="display:flex; justify-content:center">
-                            <input class="flex-c-m stext-101 cl0 bg3 bor14 hov-btn3 p-lr-15 trans-04 pointer console-log-success"
+                            <input class="flex-c-m stext-101 cl0 bg3 bor14 hov-btn3 p-lr-15 trans-04 pointer"
                                    style="height:50px" type="button" value="Hủy thanh toán" onclick="location.href='@Url.Action("ShowToCart","Cart")'">
-                            <input class="flex-c-m stext-101 cl0 bg3 bor14 hov-btn3 p-lr-15 trans-04 pointer ml-4 mr-4"
+                            <input class="flex-c-m stext-101 cl0 bg3 bor14 hov-btn3 p-lr-15 trans-04 pointer ml-4 mr-4 console-log-success"
                                    style="height:50px" type="submit" name="ThanhToan" value="Thanh toán" onclick="location.href='@Url.Action("CheckOut","CheckOut")'">
                             <input class="flex-c-m stext-101 cl0 bg3 bor14 hov-btn3 p-lr-15 trans-04 pointer"
                                    style="height:50px" type="button" value="Tiếp tục mua hàng" onclick="location.href='@Url.Action("Index","Home")'">

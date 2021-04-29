@@ -69,6 +69,10 @@
     <Compile Include="Migrations\202104241907101_UpdateTable.designer.cs">
       <DependentUpon>202104241907101_UpdateTable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202104281332142_UpdateCoupon.cs" />
+    <Compile Include="Migrations\202104281332142_UpdateCoupon.designer.cs">
+      <DependentUpon>202104281332142_UpdateCoupon.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="UnitOfWork\DbFactory.cs" />
     <Compile Include="UnitOfWork\Disposable.cs" />
@@ -96,6 +100,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202104241907101_UpdateTable.resx">
       <DependentUpon>202104241907101_UpdateTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202104281332142_UpdateCoupon.resx">
+      <DependentUpon>202104281332142_UpdateCoupon.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -3,7 +3,6 @@
 @{
     ViewBag.Title = "IndexDetails";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
-    decimal sumQuantity = (decimal)Model.OrderDetails.Sum(x => x.Quantity * x.Product.UnitPrice);
 }
 <div style="color:black;">
     <h2>Thông tin đơn hàng</h2>
@@ -11,7 +10,6 @@
     <p><strong>Số Điện Thoại:</strong>&nbsp;&nbsp;@Model.ToPhone</p>
     <p><strong>Đại Chỉ:</strong>&nbsp;&nbsp;@Model.ToAddr</p>
     <p><strong>Ngày Đặt:</strong>&nbsp;&nbsp;@Model.OrderDate</p>
-    <p><strong>Tổng Tiền:</strong>&nbsp;&nbsp;<span style="color:red">@sumQuantity.ToString("0,0 đ")</span></p>
     <p>
         <strong>Trạng Thái:</strong>&nbsp;&nbsp;
         @if (Model.Status == Status.ChoXacNhan)
@@ -66,7 +64,7 @@
 
     @foreach (var item in Model.OrderDetails)
     {
-        decimal total = (decimal)item.Product.Price * item.Quantity;
+        decimal total = (decimal)item.Product.UnitPrice * item.Quantity;
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.Product.ProductName)
@@ -95,3 +93,8 @@
     }
 
 </table>
+<div style="color:black;">
+    <p><strong>Tổng Tiền:</strong>&nbsp;&nbsp;@Model.Total_Money().ToString("0,0 đ")</p>
+    <p><strong>Giảm giá:</strong>&nbsp;&nbsp;@Model.Coupon.Discount %</p>
+    <p><strong>Thành tiền:</strong>&nbsp;&nbsp;<span style="color:red; font-size:30px">@Model.Sumtotal.ToString("0,0 đ")</span></p>
+</div>

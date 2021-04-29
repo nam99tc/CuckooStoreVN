@@ -20,9 +20,15 @@
     <!-- Shoping Cart -->
     <form class="bg0 p-t-75 p-b-85">
         <div class="container">
-            @if (Model.Items.Count() <= 0)
+            @if (Model == null || Model.Items.Count() <= 0)
             {
-                Html.RenderPartial("EmtyCart");
+                <div style="display:flex; align-items:center; justify-content:center">
+                    <img style="margin-top:30px" src="~/wwwroot/images/icons/EmtyCart.png" />
+                </div>
+                <div>
+                    <input class="flex-c-m stext-101 cl0 bg3 bor14 hov-btn3 p-lr-15 trans-04 pointer"
+                           style="height:35px" type="button" value="Tiếp tục mua hàng" onclick="location.href='@Url.Action("Index", "Home")'">
+                </div>
             }
             else
             {
@@ -50,8 +56,8 @@
                                             <tr class="table_row">
                                                 <td class="column-1">
                                                     <a href="/Cart/RemoveCart/@item._product.ProductID">
-                                                        <div class="how-itemcart1">
-                                                            <img src="@Url.Content("~/wwwroot/Image/"+item._product.Image)" alt="Image" width="150" height="100" />
+                                                        <div>
+                                                            <img src="@Url.Content("~/wwwroot/Image/" + item._product.Image)" alt="Image" width="70" height="70" />
                                                         </div>
                                                     </a>
                                                 </td>
@@ -60,25 +66,31 @@
                                                 <td class="column-4">
 
                                                     <div class="wrap-num-product flex-w m-l-auto m-r-0">
-                                                        <div class="btn-num-product-down cl8 hov-btn3 trans-04 flex-c-m">
+                                                        <button id="minus" type="button" class="btn-num-product-down cl8 hov-btn3 trans-04 flex-c-m" onclick="minusButton()" disabled>
                                                             <i class="fs-16 zmdi zmdi-minus"></i>
-                                                        </div>
-                                                        <input class="mtext-104 cl3 txt-center num-product" type="number" name="quantity" value="@item._quatity">
-                                                        <div class="btn-num-product-up cl8 hov-btn3 trans-04 flex-c-m">
+                                                        </button>
+                                                        <input id="qtValue" class="mtext-104 cl3 txt-center num-product" type="number" name="quantity" value="@item._quatity">
+                                                        <button id="plus" type="button" class="btn-num-product-up cl8 hov-btn3 trans-04 flex-c-m" onclick="plusButton()">
                                                             <i class="fs-16 zmdi zmdi-plus"></i>
-                                                        </div>
+                                                        </button>
                                                     </div>
                                                 </td>
-                                                <td class="column-5">@total.ToString("0,0 VND")</td>
+                                                <td class="column-5">@total.ToString("0,0 đ")</td>
                                             </tr>
+                                            
                                         }
                                     </tbody>
 
                                 </table>
                             </div>
+                            @if (Session["err"] != null)
+                            {
+                                <p id="mes" style="color: red; font-size: 14px; padding: 10px;">@Session["err"]</p>
+                            }
                             <div class="flex-w flex-sb-m bor15 p-t-18 p-b-15 p-lr-40 p-lr-15-sm">
+                                <input class="btn flex-c-m stext-101 cl0 bg3 bor14 hov-btn3 trans-04 pointer" type="button" value="Tiếp tục mua hàng" onclick="location.href='@Url.Action("Index", "Home")'" />
                                 <input class="btn flex-c-m stext-101 cl0 bg3 bor14 hov-btn3 trans-04 pointer" type="submit" name="update" value="Cập Nhật" />
-                                <input class="btn flex-c-m stext-101 cl0 bg3 bor14 hov-btn3 trans-04 pointer" type="button" value="Mua Hàng" style="margin-left:-300px" onclick="location.href='@Url.Action("CheckOut","CheckOut")'" />
+                                <input class="btn flex-c-m stext-101 cl0 bg3 bor14 hov-btn3 trans-04 pointer" type="button" value="Mua Hàng" onclick="location.href='@Url.Action("CheckOut", "CheckOut")'" />
                                 <div class="size-208">
                                     <span>Tổng Tiền: </span>
                                     <span class="mtext-101 cl2" style="color:red;">
@@ -94,3 +106,20 @@
         </div>
     </form>
 }
+<script src="~/wwwroot/vendor/jquery/jquery-3.2.1.min.js"></script>
+<script>
+    function minusButton() {
+        var qty = $("#qtValue").val();
+        if ($("#qtValue").val() < 3) {
+            document.getElementById("minus").disabled = true;
+        }
+    }
+    function plusButton() {
+        document.getElementById("minus").disabled = false;
+    }
+
+    setTimeout(fade_in, 2000);
+    function fade_in() {
+        $("#mes").fadeIn().delay(1000).fadeOut();
+    }
+</script>

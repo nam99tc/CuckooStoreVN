@@ -765,35 +765,6 @@ namespace CuckooStore.DataAccessLayer
             context.SaveChanges();
             #endregion
 
-            //#region Add Shipper
-            //var shippers = new List<Shipper>()
-            //{
-            //    new Shipper()
-            //    {
-            //        ShipperName = "Hà Thị Thương",
-            //        Address = "Nam Từ Liêm - Hà Nội",
-            //        Phone = "0977516941",
-            //        Price = 30000 ,
-            //    },
-            //    new Shipper()
-            //    {
-            //        ShipperName = "Trần Xuân Tính",
-            //        Address = "Bắc từ liêm - Hà Nội",
-            //        Phone = "0977516941",
-            //        Price = 20000 ,
-            //    },
-            //    new Shipper()
-            //    {
-            //        ShipperName = "Lê Thị Nụ",
-            //        Address = "Nguyễn trãi - Hà Nội",
-            //        Phone = "0977516941",
-            //        Price = 18000 ,
-            //    },
-            //};
-            //shippers.ForEach(s => context.Shippers.Add(s));
-            //context.SaveChanges();
-            //#endregion
-
             #region Add PhieuNhap
             var phieunhaps = new List<BallotImport>()
             {
@@ -831,6 +802,7 @@ namespace CuckooStore.DataAccessLayer
                 {
                     Code = "khonggiamgia",
                     Discount = 0,
+                    Description = "Không giảm giá"
                 },
                 new Coupon()
                 {
@@ -847,7 +819,7 @@ namespace CuckooStore.DataAccessLayer
                 new Coupon()
                 {
                     Code = "happynewyear2020",
-                    Discount = (decimal)10.5,
+                    Discount = 10,
                     Description = "Giảm giá trong năm 2021"
                 },
             };
@@ -855,72 +827,73 @@ namespace CuckooStore.DataAccessLayer
             context.SaveChanges();
             #endregion
 
+            // don't use now
             #region Add Order
-            var orders = new List<Order>()
-            {
-                new Order()
-                {
-                   OrderDate = new DateTime(2020,06,26),
-                   ToName = "NamLuong",
-                   ToAddr = "Ha Noi",
-                   ToPhone = "0977516941",
-                   Status = Status.ChoXacNhan,
-                   Coupon = coupons.Single(c=>c.Code==("nam123nam123nam123")),
-                   User = users.Single(c=>c.Email==("nam99tc@gmail.com")),
-                },
-                new Order()
-                {
-                   OrderDate = new DateTime(2020,10,10),
-                   ToName = "hoangloc",
-                   ToAddr = "Ha Noi",
-                   ToPhone = "0977516941",
-                   Status = Status.DaHuy,
-                   Coupon = coupons.Single(c=>c.Code==("happynewyear2020")),
-                   User = users.Single(c=>c.Email==("nunguyen@gmail.com")),
-                },
-                new Order()
-                {
-                   OrderDate = new DateTime(2020,02,02),
-                   ToName = "Đặng Hoàng",
-                   ToAddr = "Ha Noi",
-                   ToPhone = "0977516941",
-                   Status = Status.DangGiao,
-                   Coupon = coupons.Single(c=>c.Code==("nam123nam123nam123")),
-                   User = users.Single(c=>c.Email==("nam99tc@gmail.com")),
-                },
-                new Order()
-                {
-                   OrderDate = new DateTime(2020,04,12),
-                   ToName = "Quốc Việt",
-                   ToAddr = "Ha Noi",
-                   ToPhone = "0977516941",
-                   Status = Status.DaNhan,
-                   Coupon = coupons.Single(c=>c.Code==("happynewyear2020")),
-                   User = users.Single(c=>c.Email==("nunguyen@gmail.com")),
-                },
-                new Order()
-                {
-                   OrderDate = new DateTime(2020,07,26),
-                   ToName = "Đức Trung",
-                   ToAddr = "Ha Noi",
-                   ToPhone = "0977516941",
-                   Status = Status.DaNhan,
-                   Coupon = coupons.Single(c=>c.Code==("nam123nam123nam123")),
-                   User = users.Single(c=>c.Email==("nam99tc@gmail.com")),
-                },
-                new Order()
-                {
-                   OrderDate = new DateTime(2020,08,26),
-                   ToName = "Văn Tự",
-                   ToAddr = "Ha Noi",
-                   ToPhone = "0977516941",
-                   Status = Status.DaNhan,
-                   Coupon = coupons.Single(c=>c.Code==("happybirthdaytoyou")),
-                   User = users.Single(c=>c.Email==("nunguyen@gmail.com")),
-                },
-            };
-            orders.ForEach(s => context.Orders.Add(s));
-            context.SaveChanges();
+            //var orders = new List<Order>()
+            //{
+            //    new Order()
+            //    {
+            //       OrderDate = new DateTime(2020,06,26),
+            //       ToName = "NamLuong",
+            //       ToAddr = "Ha Noi",
+            //       ToPhone = "0977516941",
+            //       Status = Status.ChoXacNhan,
+            //       Coupon = coupons.Single(c=>c.Code==("nam123nam123nam123")),
+            //       User = users.Single(c=>c.Email==("nam99tc@gmail.com")),
+            //    },
+            //    new Order()
+            //    {
+            //       OrderDate = new DateTime(2020,10,10),
+            //       ToName = "hoangloc",
+            //       ToAddr = "Ha Noi",
+            //       ToPhone = "0977516941",
+            //       Status = Status.DaHuy,
+            //       Coupon = coupons.Single(c=>c.Code==("happynewyear2020")),
+            //       User = users.Single(c=>c.Email==("nunguyen@gmail.com")),
+            //    },
+            //    new Order()
+            //    {
+            //       OrderDate = new DateTime(2020,02,02),
+            //       ToName = "Đặng Hoàng",
+            //       ToAddr = "Ha Noi",
+            //       ToPhone = "0977516941",
+            //       Status = Status.DangGiao,
+            //       Coupon = coupons.Single(c=>c.Code==("nam123nam123nam123")),
+            //       User = users.Single(c=>c.Email==("nam99tc@gmail.com")),
+            //    },
+            //    new Order()
+            //    {
+            //       OrderDate = new DateTime(2020,04,12),
+            //       ToName = "Quốc Việt",
+            //       ToAddr = "Ha Noi",
+            //       ToPhone = "0977516941",
+            //       Status = Status.DaNhan,
+            //       Coupon = coupons.Single(c=>c.Code==("happynewyear2020")),
+            //       User = users.Single(c=>c.Email==("nunguyen@gmail.com")),
+            //    },
+            //    new Order()
+            //    {
+            //       OrderDate = new DateTime(2020,07,26),
+            //       ToName = "Đức Trung",
+            //       ToAddr = "Ha Noi",
+            //       ToPhone = "0977516941",
+            //       Status = Status.DaNhan,
+            //       Coupon = coupons.Single(c=>c.Code==("nam123nam123nam123")),
+            //       User = users.Single(c=>c.Email==("nam99tc@gmail.com")),
+            //    },
+            //    new Order()
+            //    {
+            //       OrderDate = new DateTime(2020,08,26),
+            //       ToName = "Văn Tự",
+            //       ToAddr = "Ha Noi",
+            //       ToPhone = "0977516941",
+            //       Status = Status.DaNhan,
+            //       Coupon = coupons.Single(c=>c.Code==("happybirthdaytoyou")),
+            //       User = users.Single(c=>c.Email==("nunguyen@gmail.com")),
+            //    },
+            //};
+            //orders.ForEach(s => context.Orders.Add(s));
+            //context.SaveChanges();
             #endregion
 
             #region Add Contact

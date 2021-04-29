@@ -27,52 +27,59 @@ namespace CuckooStore.Presentation.Areas.Admin.Controllers
         // GET: Admin/Products
         public async Task<ActionResult> Index(int? page, string sortOrder)
         {
-            //sap xep
-            ViewBag.OrderFollowCategory = String.IsNullOrEmpty(sortOrder) ? "cat_desc" : "";
-            ViewBag.OrderFollowNamePro = sortOrder == "pro_asc" ? "pro_desc" : "pro_asc";
-            ViewBag.OrderFollowColor = sortOrder == "color_asc" ? "color_desc" : "color_asc";
-            ViewBag.OrderFollowPrice = sortOrder == "price_asc" ? "price_desc" : "price_asc";
-            ViewBag.OrderFollowQty = sortOrder == "qty_asc" ? "qty_desc" : "qty_asc";
-
-            var products = await _product.GetAllAsync();
-            switch (sortOrder)
+            if (Session["iduserAdmin"] == null)
             {
-                case "cat_desc":
-                    products = products.OrderByDescending(x => x.Category.CategoryName);
-                    break;
-                case "pro_desc":
-                    products = products.OrderByDescending(x => x.ProductName);
-                    break;
-                case "pro_asc":
-                    products = products.OrderBy(x => x.ProductName);
-                    break;
-                case "color_desc":
-                    products = products.OrderByDescending(x => x.MauSac);
-                    break;
-                case "color_asc":
-                    products = products.OrderBy(x => x.MauSac);
-                    break;
-                case "price_desc":
-                    products = products.OrderByDescending(x => x.Price);
-                    break;
-                case "price_asc":
-                    products = products.OrderBy(x => x.Price);
-                    break;
-                case "qty_desc":
-                    products = products.OrderByDescending(x => x.Quantity);
-                    break;
-                case "qty_asc":
-                    products = products.OrderBy(x => x.Quantity);
-                    break;
-                default:
-                    products = products.OrderBy(x => x.Category.CategoryName);
-                    break;
+                return RedirectToAction("Login", "HomeAdmin", new { area = "Admin" });
             }
+            else
+            {
+                //sap xep
+                ViewBag.OrderFollowCategory = String.IsNullOrEmpty(sortOrder) ? "cat_desc" : "";
+                ViewBag.OrderFollowNamePro = sortOrder == "pro_asc" ? "pro_desc" : "pro_asc";
+                ViewBag.OrderFollowColor = sortOrder == "color_asc" ? "color_desc" : "color_asc";
+                ViewBag.OrderFollowPrice = sortOrder == "price_asc" ? "price_desc" : "price_asc";
+                ViewBag.OrderFollowQty = sortOrder == "qty_asc" ? "qty_desc" : "qty_asc";
 
-            //phan trang
-            int pageSize = 10;
-            int pageNumber = (page ?? 1);
-            return View(products.ToPagedList(pageNumber, pageSize));
+                var products = await _product.GetAllAsync();
+                switch (sortOrder)
+                {
+                    case "cat_desc":
+                        products = products.OrderByDescending(x => x.Category.CategoryName);
+                        break;
+                    case "pro_desc":
+                        products = products.OrderByDescending(x => x.ProductName);
+                        break;
+                    case "pro_asc":
+                        products = products.OrderBy(x => x.ProductName);
+                        break;
+                    case "color_desc":
+                        products = products.OrderByDescending(x => x.MauSac);
+                        break;
+                    case "color_asc":
+                        products = products.OrderBy(x => x.MauSac);
+                        break;
+                    case "price_desc":
+                        products = products.OrderByDescending(x => x.Price);
+                        break;
+                    case "price_asc":
+                        products = products.OrderBy(x => x.Price);
+                        break;
+                    case "qty_desc":
+                        products = products.OrderByDescending(x => x.Quantity);
+                        break;
+                    case "qty_asc":
+                        products = products.OrderBy(x => x.Quantity);
+                        break;
+                    default:
+                        products = products.OrderBy(x => x.Category.CategoryName);
+                        break;
+                }
+
+                //phan trang
+                int pageSize = 10;
+                int pageNumber = (page ?? 1);
+                return View(products.ToPagedList(pageNumber, pageSize));
+            }
         }
 
         // GET: Admin/Products/Create
