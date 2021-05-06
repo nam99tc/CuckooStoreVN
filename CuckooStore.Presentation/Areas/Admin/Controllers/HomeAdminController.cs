@@ -22,7 +22,7 @@ namespace CuckooStore.Presentation.Areas.Admin.Controllers
         }
         public ActionResult LogOut()
         {
-            return RedirectToAction("Index", "HomeAdmin", new { area = "Admin" });
+            return RedirectToAction("Login", "HomeAdmin", new { area = "Admin" });
         }
         [HttpGet]
         public ActionResult Login()
@@ -45,6 +45,7 @@ namespace CuckooStore.Presentation.Areas.Admin.Controllers
                     Session["EmailAdmin"] = user.Email;
                     Session["iduserAdmin"] = user.UserID;
                     Session["roleAdmin"] = user.Role;
+                    Session["ImageAdmin"] = user.Image;
                     return RedirectToAction("Index", "HomeAdmin", new { area = "Admin" });
                 }
                 else
