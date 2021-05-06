@@ -3,6 +3,7 @@ using CuckooStore.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Globalization;
 using System.Linq;
 using System.Web.Mvc;
 
@@ -22,7 +23,7 @@ namespace CuckooStore.Presentation.Areas.Admin.Controllers
         }
         // GET: Admin/Statistical
         [HttpGet]
-        public ActionResult Index(IEnumerable<Order> order)
+        public ActionResult Index()
         {
             if (Session["iduserAdmin"] == null)
             {
@@ -30,7 +31,21 @@ namespace CuckooStore.Presentation.Areas.Admin.Controllers
             }
             else
             {
-                if (order == null)
+                if (Session["begin"] != null && Session["end"] != null)
+                {
+                    DateTime start = DateTime.Parse(Session["begin"].ToString());
+                    DateTime end = DateTime.Parse(Session["end"].ToString());
+                    var orders = _order.FindAll(filter: x => x.OrderDate >= start && x.OrderDate <= end);
+
+                    decimal money = 0;
+                    foreach (var item in orders)
+                    {
+                        money += (decimal)item.Total_Money();
+                    }
+                    Session["Statistical"] = money;
+                    return View(orders);
+                }
+                else
                 {
                     var or = _order.GetAll();
                     decimal money = 0;
@@ -41,7 +56,6 @@ namespace CuckooStore.Presentation.Areas.Admin.Controllers
                     Session["Statistical"] = money;
                     return View(or);
                 }
-                return View(order);
             }
         }
         [HttpPost]
@@ -66,8 +80,10 @@ namespace CuckooStore.Presentation.Areas.Admin.Controllers
                     money += (decimal)item.Total_Money();
                 }
                 Session["Statistical"] = money;
+                Session["begin"] = start.ToString("dd/MM/yyyy");
+                Session["end"] = end.ToString("dd/MM/yyyy");
 
-                return RedirectToAction("Index", "Statistical",new { order = orders});
+                return RedirectToAction("Index");
             }
         }
         public ActionResult StatiscalFollowOrder()

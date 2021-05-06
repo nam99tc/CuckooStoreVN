@@ -35,6 +35,10 @@
                     @if (Session["Hoten"] != null)
                     {
                         <div class="right-top-bar flex-w h-full">
+                            @{
+                                string ImagePath = "~/wwwroot/ImageUser/" + Session["ImageUser"];
+                            }
+                            <img class="wrap-pic-s bor0 of-hidden m-r-18 m-t-6" style="border:solid 1px; width:35px;height:35px;margin-top: 3px;margin-right: 4px;" src="@Url.Content(ImagePath)" alt="AVATAR">
                             @Html.ActionLink(Session["Hoten"].ToString(), "Edit", new { id = Session["iduser"] }, new { @class = "flex-c-m trans-04 p-lr-25", @style = "color: white;" })
                             <a href="@Url.Action("Logout", "Home")" class="flex-c-m trans-04 p-lr-25" style="color: white">
                                 Đăng Xuất
@@ -120,6 +124,13 @@
             </div>
         </div>
     </header>
+    <!-- Messenger Plugin chat Code -->
+    <div id="fb-root"></div>
+    <!-- Your Plugin chat code -->
+    <div class="fb-customerchat"
+         attribution="page_inbox"
+         page_id="109173081251522">
+    </div>
     @{
         Html.RenderAction("ViewCart", "Cart");
     }
@@ -240,6 +251,22 @@
                 ps.update();
             })
         });</script>
+    <script>
+        window.fbAsyncInit = function () {
+            FB.init({
+                xfbml: true,
+                version: 'v10.0'
+            });
+        };
+
+        (function (d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) return;
+            js = d.createElement(s); js.id = id;
+            js.src = 'https://connect.facebook.net/vi_VN/sdk/xfbml.customerchat.js';
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+    </script>
     <script src="~/wwwroot/js/main.js"></script>
 </body>
 </html>

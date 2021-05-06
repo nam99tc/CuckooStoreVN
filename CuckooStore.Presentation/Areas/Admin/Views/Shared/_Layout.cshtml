@@ -99,7 +99,7 @@
                 <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <a class="collapse-item" href="@Url.Action("Index","Statistical")">Thống kê theo tháng</a>
-                        <a class="collapse-item" href="@Url.Action("StatiscalFollowOrder","Statistical")">Thống kê theo hóa đơn</a>
+                        <a class="collapse-item" href="@Url.Action("StatiscalFollowOrder","Statistical")">Thống kê sản phẩm</a>
                     </div>
                 </div>
             </li>
@@ -123,18 +123,7 @@
                             <i class="fa fa-bars"></i>
                         </button>
                     </form>
-                    <!-- Topbar Search -->
-                    <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
-                        <div class="input-group">
-                            <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..."
-                                   aria-label="Search" aria-describedby="basic-addon2">
-                            <div class="input-group-append">
-                                <button class="btn btn-primary" type="button">
-                                    <i class="fas fa-search fa-sm"></i>
-                                </button>
-                            </div>
-                        </div>
-                    </form>
+                    
                     <!-- Topbar Navbar -->
                     <ul class="navbar-nav ml-auto">
                         <!-- Nav Item - Search Dropdown (Visible Only XS) -->
@@ -163,11 +152,14 @@
                         <div class="topbar-divider d-none d-sm-block"></div>
                         <!-- Nav Item - User Information -->
                         <li class="nav-item dropdown no-arrow">
+                            @{ 
+                                 string ImagePath = "~/wwwroot/ImageUser/" + Session["ImageAdmin"];
+                            }
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <span class="mr-2 d-none d-lg-inline text-gray-600 small">@Session["HotenAdmin"]</span>
                                 <img class="img-profile rounded-circle"
-                                     src="~/Areas/Admin/wwwroot/img/undraw_profile.svg">
+                                     src="@Url.Content(ImagePath)">
                             </a>
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
@@ -177,7 +169,7 @@
                                     Tài Khoản
                                 </a>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
+                                <a class="dropdown-item" href="@Url.Action("Login", "HomeAdmin", new { area = "Admin" })" data-toggle="modal" data-target="#logoutModal">
                                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Đăng Xuất
                                 </a>
@@ -190,9 +182,7 @@
                 <div class="container-fluid">
                     <!-- DataTales Example -->
                     <div class="card shadow mb-4">
-                        <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">Bảng Quản Lý</h6>
-                        </div>
+                        
                         <div class="card-body">
                             <div class="table-responsive">
                                 @RenderBody()
@@ -207,7 +197,7 @@
             <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; Your Website CucKoo 2021</span>
+                        <span>Copyright &copy; NamLuong CucKoo Store 2021</span>
                     </div>
                 </div>
             </footer>
