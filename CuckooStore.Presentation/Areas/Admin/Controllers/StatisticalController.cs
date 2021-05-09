@@ -3,6 +3,7 @@ using CuckooStore.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Data.Entity;
 using System.Globalization;
 using System.Linq;
 using System.Web.Mvc;
@@ -33,10 +34,10 @@ namespace CuckooStore.Presentation.Areas.Admin.Controllers
             {
                 if (Session["begin"] != null && Session["end"] != null)
                 {
-                    DateTime start = DateTime.Parse(Session["begin"].ToString());
-                    DateTime end = DateTime.Parse(Session["end"].ToString());
-                    var orders = _order.FindAll(filter: x => x.OrderDate >= start && x.OrderDate <= end);
-
+                    DateTime start = DateTime.Parse(Session["s"].ToString());
+                    DateTime end = DateTime.Parse(Session["e"].ToString());
+                    var orders = _order.FindAll(filter: x => DbFunctions.TruncateTime(x.OrderDate) >= DbFunctions.TruncateTime(start)
+                                    && DbFunctions.TruncateTime(x.OrderDate) <= DbFunctions.TruncateTime(end) && x.Status == Status.DaNhan);
                     decimal money = 0;
                     foreach (var item in orders)
                     {
@@ -47,7 +48,8 @@ namespace CuckooStore.Presentation.Areas.Admin.Controllers
                 }
                 else
                 {
-                    var or = _order.GetAll();
+
+                    var or = _order.FindAll(filter: x => x.Status == Status.DaNhan);
                     decimal money = 0;
                     foreach (var item in or)
                     {
@@ -66,13 +68,18 @@ namespace CuckooStore.Presentation.Areas.Admin.Controllers
             if (begindate == "" || enddate == "")
             {
                 Session["Statistical"] = 0;
+                Session["begin"] = null;
+                Session["end"] = null;
                 return RedirectToAction("Index", "Statistical");
             }
             else
             {
                 DateTime start = DateTime.Parse(begindate);
                 DateTime end = DateTime.Parse(enddate);
-                var orders = _order.FindAll(filter: x => x.OrderDate >= start && x.OrderDate <= end);
+                Session["s"] = start.Date;
+                Session["e"] = end.Date;
+                var orders = _order.FindAll(filter: x => DbFunctions.TruncateTime(x.OrderDate) >= DbFunctions.TruncateTime(start)
+                && DbFunctions.TruncateTime(x.OrderDate) <= DbFunctions.TruncateTime(end) && x.Status == Status.DaNhan);
 
                 decimal money = 0;
                 foreach (var item in orders)
@@ -88,15 +95,16 @@ namespace CuckooStore.Presentation.Areas.Admin.Controllers
         }
         public ActionResult StatiscalFollowOrder()
         {
-            var list = _orderDetail.GetAll();
+            var list = _orderDetail.FindAll(filter: x => x.Order.Status == Status.DaNhan);
             var Listpro = list.GroupBy(l => l.Product)
                           .Select(lg =>
-                            new ListPro {
+                            new ListPro
+                            {
                                 Product = lg.Key,
                                 Name = lg.First().Product.ProductName,
                                 Image = lg.First().Product.Image,
                                 TotalQty = lg.Sum(w => w.Quantity),
-                                TotalMoney = lg.Sum(c=>c.Quantity * c.Product.UnitPrice).Value,
+                                TotalMoney = lg.Sum(c => c.Quantity * c.Product.UnitPrice).Value,
                             });
             ViewBag.IMAGE = Listpro.Select(x => x.Image);
             ViewBag.QTY = Listpro.Select(x => x.TotalQty);

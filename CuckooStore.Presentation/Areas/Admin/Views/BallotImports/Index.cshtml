@@ -5,10 +5,10 @@
     ViewBag.Title = "Index";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
-<h2>Danh sách các phiếu nhập</h2>
-<p>
-    @Html.ActionLink("Tạo phiếu nhập mới", "Create")
-</p>
+<center><h2 style="color:black">Danh sách phiếu nhập</h2></center>
+<button class="btn btn-primary" onclick="location.href='@Url.Action("Create","BallotImports")'">Tạo mới</button>
+<br />
+<br />
 <table class="table">
     <tr>
         <th>

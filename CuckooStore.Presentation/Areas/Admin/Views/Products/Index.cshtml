@@ -5,29 +5,39 @@
     ViewBag.Title = "Index";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
-<h2>Danh sách các sản phẩm</h2>
-<p>
-    @Html.ActionLink("Tạo sản phẩm mới", "Create")
-</p>
+<style>
+    a {
+        color: black;
+    }
+</style>
+<center><h2 style="color:black">Danh sách sản phẩm</h2></center>
+<button class="btn btn-primary" onclick="location.href='@Url.Action("Create","Products")'">Tạo mới</button>
+<br />
+<br />
 <table class="table">
     <tr class="d-flex">
         <th class="col-md-2">
             @Html.ActionLink("Tên danh mục", "Index", new { sortOrder = ViewBag.OrderFollowCategory })
+            <i class="fa fa-fw fa-sort"></i>
         </th>
         <th class="col-md-3">
             @Html.ActionLink("Tên sản phẩm", "Index", new { sortOrder = ViewBag.OrderFollowNamePro })
+            <i class="fa fa-fw fa-sort"></i>
         </th>
-        <th class="col-md-2">
+        <th class="col-md-1">
             Ảnh
         </th>
-        <th class="col-md-1">
+        <th class="col-md-2 text-center">
             @Html.ActionLink("Màu sắc", "Index", new { sortOrder = ViewBag.OrderFollowColor })
+            <i class="fa fa-fw fa-sort"></i>
         </th>
-        <th class="col-md-2">
+        <th class="col-md-2" style="left:20px">
             @Html.ActionLink("Giá", "Index", new { sortOrder = ViewBag.OrderFollowPrice })
+            <i class="fa fa-fw fa-sort"></i>
         </th>
-        <th class="col-md-1">
+        <th class="col-md-1" style="padding: .75rem 0 .75rem 0;">
             @Html.ActionLink("Số lượng", "Index", new { sortOrder = ViewBag.OrderFollowQty })
+            <i class="fa fa-fw fa-sort"></i>
         </th>
         <th class="col-md-1"></th>
     </tr>
@@ -41,14 +51,14 @@
             <td class="col-md-3">
                 @Html.DisplayFor(modelItem => item.ProductName)
             </td>
-            <td class="col-md-2">
+            <td class="col-md-1">
                 @{
-                string ImagePath = "~/wwwroot/Image/" + item.Image;
+                    string ImagePath = "~/wwwroot/Image/" + item.Image;
                 }
                 <img width="100" src="@Url.Content(ImagePath)" alt="Product" class="img-thumbnail" />
                 <br />
             </td>
-            <td class="col-md-1">
+            <td class="col-md-2 text-center">
                 @Html.DisplayFor(modelItem => item.MauSac)
             </td>
             <td class="col-md-2">

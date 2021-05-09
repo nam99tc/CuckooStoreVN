@@ -43,15 +43,15 @@ else
                     <div style="display:flex; align-items:center; justify-content:center">
                         @if (Model.Status.ToString().Equals("ChoXacNhan"))
                         {
-                            <p>Đang chờ xác nhận</p>
+                            <p style="color:green">Đang chờ xác nhận</p>
                         }
                         @if (Model.Status.ToString().Equals("DangGiao"))
                         {
-                            <p>Đang giao hàng</p>
+                            <p style="color:yellow">Đang giao hàng</p>
                         }
                         @if (Model.Status.ToString().Equals("DaNhan"))
                         {
-                            <p>Đã nhận</p>
+                            <p style="color:blue">Đã nhận</p>
                         }
                         @if (Model.Status.ToString().Equals("DaHuy"))
                         {
@@ -65,15 +65,15 @@ else
                             <h4 style="padding-bottom: 10px;">Thông tin đơn hàng</h4>
                             <p style="padding-bottom: 10px;"><strong>Họ tên: </strong>@Model.ToName</p>
                             <p style="padding-bottom: 10px;"><strong>Số điện thoại: </strong>@Model.ToPhone</p>
-                            <p><strong>Địa chỉ nhận hàng: </strong>@Model.ToAddr</p>
-                            <p><strong>Tổng tiền: </strong>@Model.Total_Money().ToString("0,0 đ")</p>
-                            <p><strong>Giảm giá: </strong>@Model.Coupon.Discount %</p>
+                            <p style="padding-bottom: 10px;"><strong>Địa chỉ nhận hàng: </strong>@Model.ToAddr</p>
+                            <p style="padding-bottom: 10px;"><strong>Tổng tiền: </strong>@Model.Total_Money().ToString("0,0 đ")</p>
+                            <p style="padding-bottom: 10px;"><strong>Giảm giá: </strong>@Model.Coupon.Discount %</p>
                             <p><strong>Thành tiền: </strong>@Model.Sumtotal.ToString("0,0 đ")</p>
                         </div>
                     </div>
                 </div>
                 <div class="col">
-                    <div style="width:100%">
+                    <div style="width:100%; padding-bottom:15px">
                         @foreach (var item in Model.OrderDetails)
                         {
                             decimal total = Convert.ToDecimal(item.Product.UnitPrice * item.Quantity);

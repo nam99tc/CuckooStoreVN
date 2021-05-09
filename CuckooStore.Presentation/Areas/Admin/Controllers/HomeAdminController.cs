@@ -51,6 +51,7 @@ namespace CuckooStore.Presentation.Areas.Admin.Controllers
                 else
                 {
                     ViewBag.Error = "Đăng nhập không thành công";
+                    return RedirectToAction("Login", "HomeAdmin", new { area = "Admin" });
                 }
             }
             return RedirectToAction("Index");

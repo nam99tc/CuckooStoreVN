@@ -49,10 +49,10 @@ namespace CuckooStore.Presentation.Controllers
                 Product pro = await _product.GetByIdAsync(item.Product.ProductID);
                 pro.Quantity += item.Quantity;
 
-                if (pro != null)
-                {
-                    cart.Add(pro, item.Quantity);
-                }
+                //if (pro != null)
+                //{
+                //    cart.Add(pro, item.Quantity);
+                //}
                 await _product.UpdateAsync(pro);
             }
             return PartialView("HistoryDetail");

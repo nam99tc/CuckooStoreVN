@@ -5,20 +5,29 @@
     ViewBag.Title = "Index";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
-<h2>Danh sách các bình luận</h2>
+<style>
+    a{
+        color:black;
+    }
+</style>
+<center><h2 style="color:black">Danh sách các bình luận</h2></center>
+<br />
 <table class="table">
     <tr class="d-flex">
         <th class="col-md-3">
-            @Html.ActionLink("Tên sản phẩm","Index", new { sortOrder = ViewBag.OrderFollowProduct })
+            @Html.ActionLink("Tên sản phẩm", "Index", new { sortOrder = ViewBag.OrderFollowProduct })
+            <i class="fa fa-fw fa-sort"></i>
         </th>
         <th class="col-md-2">
             @Html.ActionLink("Tên người dùng", "Index", new { sortOrder = ViewBag.OrderFollowUser })
+            <i class="fa fa-fw fa-sort"></i>
         </th>
         <th class="col-md-4">
             Nội dung
         </th>
         <th class="col-md-2">
             @Html.ActionLink("Thời gian", "Index", new { sortOrder = ViewBag.OrderFollowTime })
+            <i class="fa fa-fw fa-sort"></i>
         </th>
         <th class="col-md-1"></th>
     </tr>

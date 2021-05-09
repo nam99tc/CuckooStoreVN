@@ -2,6 +2,7 @@
 using CuckooStore.DataAccessLayer;
 using CuckooStore.Models;
 using PagedList;
+using System;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
@@ -24,16 +25,53 @@ namespace CuckooStore.Presentation.Areas.Admin.Controllers
             _coupon = coupon;
         }
         // GET: Admin/Orders
-        public async Task<ActionResult> Index(int? page)
+        public async Task<ActionResult> Index(int? page, string sortOrder)
         {
             if (Session["iduserAdmin"] == null)
             {
                 return RedirectToAction("Login", "HomeAdmin", new { area = "Admin" });
             }
-            int pageSize = 5;
-            int pageNumber = (page ?? 1);
-            var orders = await _order.GetAllAsync();
-            return View(orders.ToPagedList(pageNumber, pageSize));
+            else
+            {
+                //sap xep
+                ViewBag.OrderFolloworderdate = String.IsNullOrEmpty(sortOrder) ? "dt_asc" : "";
+                ViewBag.OrderFollowToadd = sortOrder == "add_asc" ? "add_desc" : "add_asc";
+                ViewBag.OrderFollowToname = sortOrder == "name_asc" ? "name_desc" : "name_asc";
+                ViewBag.OrderFollowstatusor = sortOrder == "stt_asc" ? "stt_desc" : "stt_asc";
+
+
+                var orders = await _order.GetAllAsync();
+                switch (sortOrder)
+                {
+                    case "dt_asc":
+                        orders = orders.OrderBy(x => x.OrderDate);
+                        break;
+                    case "add_desc":
+                        orders = orders.OrderByDescending(x => x.ToAddr);
+                        break;
+                    case "add_asc":
+                        orders = orders.OrderBy(x => x.ToAddr);
+                        break;
+                    case "name_desc":
+                        orders = orders.OrderByDescending(x => x.ToName);
+                        break;
+                    case "name_asc":
+                        orders = orders.OrderBy(x => x.ToName);
+                        break;
+                    case "stt_desc":
+                        orders = orders.OrderByDescending(x => x.Status);
+                        break;
+                    case "stt_asc":
+                        orders = orders.OrderBy(x => x.Status);
+                        break;
+                    default:
+                        orders = orders.OrderByDescending(x => x.OrderDate);
+                        break;
+                }
+                int pageSize = 5;
+                int pageNumber = (page ?? 1);
+                return View(orders.ToPagedList(pageNumber, pageSize));
+            }
         }
 
         public async Task<ActionResult> IndexDetails(int id)

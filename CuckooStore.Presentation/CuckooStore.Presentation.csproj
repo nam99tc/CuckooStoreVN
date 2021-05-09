@@ -39,7 +39,7 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
+    <Optimize>false</Optimize>
     <OutputPath>bin\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
@@ -1888,6 +1888,7 @@
     <Content Include="wwwroot\images\icons\icon-pay-05.png" />
     <Content Include="wwwroot\images\icons\icon-prev.png" />
     <Content Include="wwwroot\images\icons\logo.png" />
+    <Content Include="wwwroot\images\image_default.png" />
     <Content Include="wwwroot\images\unnamed.jpg" />
     <Content Include="wwwroot\ImageUser\Chi.PNG" />
     <Content Include="wwwroot\ImageUser\Hien.PNG" />

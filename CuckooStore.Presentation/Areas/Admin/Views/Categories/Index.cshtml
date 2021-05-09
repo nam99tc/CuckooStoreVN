@@ -4,30 +4,36 @@
     ViewBag.Title = "Index";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
-<h2>Danh sách danh mục</h2>
-<p>
-    @Html.ActionLink("Tạo mới danh mục", "Create")
-</p>
+<center><h2 style="color:black">Danh sách danh mục</h2></center>
+<button class="btn btn-primary" onclick="location.href='@Url.Action("Create","Categories")'">Tạo mới</button>
+<br />
+<br />
 <table class="table">
     <tr class="d-flex">
-        <th class="col-md-10">
+        <th class="col-md-2"></th>
+        <th class="col-md-4">
             @Html.DisplayNameFor(model => model.CategoryName)
         </th>
+        <th class="col-md-4"></th>
         <th class="col-md-2"></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr class="d-flex">
-        <td class="col-md-10">
-            @Html.DisplayFor(modelItem => item.CategoryName)
-        </td>
-        <td class="col-md-2">
-            <form action="@Url.Action("Delete","Categories", new { id= item.CategoryID })" method="post">
-                <a href="@Url.Action("Edit","Categories", new { id=item.CategoryID })" class="btn btn-primary">Sửa</a>
-                <button type="submit" onclick="return confirm('Bạn có chắc muốn xóa danh mục này?');" class="btn btn-danger">Xóa</button>
-            </form>
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr class="d-flex">
+            <td class="col-md-2"></td>
+            <td class="col-md-4">
+                @Html.DisplayFor(modelItem => item.CategoryName)
+            </td>
+            <td class="col-md-2"></td>
+            <td class="col-md-2">
+                <form action="@Url.Action("Delete","Categories", new { id= item.CategoryID })" method="post">
+                    <a href="@Url.Action("Edit","Categories", new { id=item.CategoryID })" class="btn btn-primary">Sửa</a>
+                    <button type="submit" onclick="return confirm('Bạn có chắc muốn xóa danh mục này?');" class="btn btn-danger">Xóa</button>
+                </form>
+            </td>
+            <td class="col-md-2"></td>
+        </tr>
+    }
 
 </table>

@@ -5,28 +5,38 @@
     ViewBag.Title = "Index";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
-<p>
-    @Html.ActionLink("Tạo mới người dùng", "Create")
-</p>
+<style>
+    a{
+        color:black;
+    }
+</style>
+<center><h2 style="color:black">Danh sách người dùng</h2></center>
+<button class="btn btn-primary" onclick="location.href='@Url.Action("Create","Users")'">Tạo mới</button>
+<br />
+<br />
 <table class="table">
     <tr>
         <th>
-            Email
+            @Html.ActionLink("Email", "Index", new { sortOrder = ViewBag.OrderFollowEmail })
+            <i class="fa fa-fw fa-sort"></i>
         </th>
         <th>
-            Địa chỉ
+            Ảnh
+        </th>
+        <th>
+            @Html.ActionLink("Địa chỉ", "Index", new { sortOrder = ViewBag.OrderFollowAddUser })
+            <i class="fa fa-fw fa-sort"></i>
         </th>
         <th>
             SĐT
         </th>
         <th>
-            Quyền
+            @Html.ActionLink("Quyền", "Index", new { sortOrder = ViewBag.OrderFollowRoleUser })
+            <i class="fa fa-fw fa-sort"></i>
         </th>
         <th>
-            Trạng thái
-        </th>
-        <th>
-            Ảnh
+            @Html.ActionLink("Trạng thái", "Index", new { sortOrder = ViewBag.OrderFollowActiveUser })
+            <i class="fa fa-fw fa-sort"></i>
         </th>
         <th></th>
     </tr>
@@ -41,7 +51,7 @@
                 @{
                     string ImagePath = "~/wwwroot/ImageUser/" + item.Image;
                 }
-                <img width="100" src="@Url.Content(ImagePath)" alt="User" class="img-thumbnail" />
+                <img width="100" style="height:100px" src="@Url.Content(ImagePath)" alt="User" class="img-thumbnail" />
                 <br />
             </td>
             <td>

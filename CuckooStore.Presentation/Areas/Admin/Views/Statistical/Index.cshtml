@@ -35,13 +35,20 @@
     <button class="btn btn-success" type="submit">Thống kê</button>
 </form>
 <br />
-@if (Session["begin"] != null && Session["end"] != null)
+@if (ViewBag.ErrorChoseDate != null)
 {
-<strong><span style="color:black">Danh sách đơn hàng từ ngày: </span><span style="color:red">@Session["begin"] -> @Session["end"]</span></strong>
+    <div class="alert alert-danger" role="alert">@ViewBag.ErrorChoseDate</div>
 }
 else
 {
-    <span>Danh sách tất cả các đơn hàng</span>
+    if (Session["begin"] != null && Session["end"] != null)
+    {
+        <strong><span style="color:black">Danh sách đơn hàng từ ngày: </span><span style="color:red">@Session["begin"] -> @Session["end"]</span></strong>
+    }
+    else
+    {
+        <span>Danh sách tất cả các đơn hàng</span>
+    }
 }
 <br />
 <table class="table" style="color:black">

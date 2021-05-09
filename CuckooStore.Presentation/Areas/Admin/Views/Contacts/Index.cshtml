@@ -5,17 +5,26 @@
     ViewBag.Title = "Index";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
-<h2>Danh sách phản hồi</h2>
+<style>
+    a{
+        color:black
+    }
+</style>
+<center><h2 style="color:black">Danh sách phản hồi</h2></center>
+<br />
 <table class="table">
     <tr class="d-flex">
         <th class="col-md-4">
-            Họ tên
+            @Html.ActionLink("Họ tên", "Index", new { sortOrder = ViewBag.OrderFollowNameContact })
+            <i class="fa fa-fw fa-sort"></i>
         </th>
         <th class="col-md-3">
-            Email
+            @Html.ActionLink("Email", "Index", new { sortOrder = ViewBag.OrderFollowEmailContact })
+            <i class="fa fa-fw fa-sort"></i>
         </th>
         <th class="col-md-3">
-            Ngày
+            @Html.ActionLink("Ngày", "Index", new { sortOrder = ViewBag.OrderFollowTimeContact })
+            <i class="fa fa-fw fa-sort"></i>
         </th>
         <th class="col-md-2"></th>
     </tr>
@@ -23,13 +32,13 @@
     @foreach (var item in Model)
     {
         <tr class="d-flex">
-            <td  class="col-md-4">
+            <td class="col-md-4">
                 @Html.DisplayFor(modelItem => item.Name)
             </td>
-            <td  class="col-md-3">
+            <td class="col-md-3">
                 @Html.DisplayFor(modelItem => item.Email)
             </td>
-            <td  class="col-md-3">
+            <td class="col-md-3">
                 @Html.DisplayFor(modelItem => item.Date)
             </td>
             <td class="col-md-2">

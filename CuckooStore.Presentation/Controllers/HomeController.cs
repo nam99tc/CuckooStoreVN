@@ -185,6 +185,7 @@ namespace CuckooStore.Presentation.Controllers
                 else
                 {
                     ViewBag.Error = "Đăng nhập không thành công";
+                    return View();
                 }
             }
             return RedirectToAction("Index");
@@ -215,16 +216,26 @@ namespace CuckooStore.Presentation.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "FullName,Email,PassWord,Address,Phone,Status")] User user)
+        public ActionResult Edit([Bind(Include = "UserID,FullName,Email,PassWord,Address,Phone,Role,StatusUser,Image")] User user)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
-
+                    var f = Request.Files["ImageFile"];
+                    if (f != null && f.ContentLength > 0)
+                    {
+                        string FileName = System.IO.Path.GetFileName(f.FileName);
+                        string UploadPath = Server.MapPath("~/wwwroot/ImageUser/" + FileName);
+                        f.SaveAs(UploadPath);
+                        user.Image = FileName;
+                    }
+                    user.Role = Role.User;
+                    Session["ImageUser"] = user.Image;
                     Session["HoTen"] = user.FullName;
                     Session["iduser"] = user.UserID;
                     _userServices.Update(user);
+
                 }
                 return RedirectToAction("Index");
             }

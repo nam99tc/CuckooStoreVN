@@ -24,15 +24,15 @@ namespace CuckooStore.Presentation.Areas.Admin.Controllers
             else
             {
                 //sap xep
-                ViewBag.OrderFollowProduct = String.IsNullOrEmpty(sortOrder) ? "pro_desc" : "";
+                ViewBag.OrderFollowTime = String.IsNullOrEmpty(sortOrder) ? "time_asc" : "";
                 ViewBag.OrderFollowUser = sortOrder == "user_asc" ? "user_desc" : "user_asc";
-                ViewBag.OrderFollowTime = sortOrder == "time_asc" ? "time_desc" : "time_asc";
+                ViewBag.OrderFollowProduct = sortOrder == "pro_asc" ? "pro_desc" : "pro_asc";
 
                 var comments = await _comment.GetAllAsync();
                 switch (sortOrder)
                 {
-                    case "pro_desc":
-                        comments = comments.OrderByDescending(x => x.Product.ProductName);
+                    case "time_asc":
+                        comments = comments.OrderBy(x => x.CommentDate);
                         break;
                     case "user_desc":
                         comments = comments.OrderByDescending(x => x.User.FullName);
@@ -40,14 +40,14 @@ namespace CuckooStore.Presentation.Areas.Admin.Controllers
                     case "user_asc":
                         comments = comments.OrderBy(x => x.User.FullName);
                         break;
-                    case "time_desc":
-                        comments = comments.OrderByDescending(x => x.CommentDate);
+                    case "pro_desc":
+                        comments = comments.OrderByDescending(x => x.Product.ProductName);
                         break;
-                    case "time_asc":
-                        comments = comments.OrderBy(x => x.CommentDate);
+                    case "pro_asc":
+                        comments = comments.OrderBy(x => x.Product.ProductName);
                         break;
                     default:
-                        comments = comments.OrderBy(x => x.Product.ProductName);
+                        comments = comments.OrderByDescending(x => x.CommentDate);
                         break;
                 }
 
