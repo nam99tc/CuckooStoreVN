@@ -1,0 +1,114 @@
+﻿@model CuckooStore.Models.Order
+
+@{
+    ViewBag.Title = "IndexDetails";
+}
+<link href="~/Areas/Admin/wwwroot/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+<link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+      rel="stylesheet">
+<!-- Custom styles for this template -->
+<link href="~/Areas/Admin/wwwroot/css/sb-admin-2.min.css" rel="stylesheet">
+<!-- Custom styles for this page -->
+<link href="~/Areas/Admin/wwwroot/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+<style>
+
+    .container_swap {
+        width: 100%;
+    }
+
+    .div_left {
+        width: 50%;
+        float: left;
+    }
+
+    .div_right {
+        width: 50%;
+        float: left;
+    }
+</style>
+<center><h2 style="color:black">Thông tin đơn hàng</h2></center>
+<br />
+<br />
+<div class="container_swap" style="display:flex">
+    <div class="div_left" style="color:black;">
+        <p><strong>Người gửi:</strong>&nbsp;&nbsp;Cửa hàng Cuckoo</p>
+        <p><strong>Đại Chỉ:</strong>&nbsp;&nbsp;57D - Mễ Trì - Nam Từ Liêm - Hà Nội</p>
+        <p><strong>Số Điện Thoại:</strong>&nbsp;&nbsp;0977516941</p>
+        <p><strong>Email:</strong>&nbsp;&nbsp;nam99tc@gmail.com</p>
+    </div>
+    <div class="div_right" style="color:black;float:left">
+        <p><strong>Người nhận:</strong>&nbsp;&nbsp;@Model.ToName</p>
+        <p><strong>Số Điện Thoại:</strong>&nbsp;&nbsp;@Model.ToPhone</p>
+        <p><strong>Đại Chỉ:</strong>&nbsp;&nbsp;@Model.ToAddr</p>
+        <p><strong>Ngày Đặt:</strong>&nbsp;&nbsp;@Model.OrderDate</p>
+        <p><strong>Trạng Thái:</strong>&nbsp;&nbsp;<span style="color:green">Đã nhận</span></p>
+    </div>
+</div>
+<br />
+<br />
+<table class="table" style="color:black">
+    <tr>
+
+        <th>
+            Tên sản phẩm
+        </th>
+        <th>
+            Ảnh
+        </th>
+        <th>
+            Màu sắc
+        </th>
+        <th>
+            Số lượng
+        </th>
+        <th>
+            Giá
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model.OrderDetails)
+    {
+        decimal total = (decimal)item.Product.UnitPrice * item.Quantity;
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Product.ProductName)
+            </td>
+            <td>
+                @{
+                    string ImagePath = "~/wwwroot/Image/" + item.Product.Image;
+                }
+                <img width="100" src="@Url.Content(ImagePath)" alt="Product" class="img-thumbnail" />
+                <br />
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Product.MauSac)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Quantity)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Product.UnitPrice)
+            </td>
+        </tr>
+        total = 0;
+    }
+
+</table>
+<div style="color:black;">
+    <p><strong>Tổng Tiền:</strong>&nbsp;&nbsp;@Model.Total_Money().ToString("0,0 đ")</p>
+    <p><strong>Giảm giá:</strong>&nbsp;&nbsp;@Model.Coupon.Discount %</p>
+    <p><strong>Thành tiền:</strong>&nbsp;&nbsp;<span style="color:red; font-size:25px;">@Model.Sumtotal.ToString("0,0 đ")</span></p>
+</div>
+<!-- Bootstrap core JavaScript-->
+<script src="~/Areas/Admin/wwwroot/vendor/jquery/jquery.min.js"></script>
+<script src="~/Areas/Admin/wwwroot/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- Core plugin JavaScript-->
+<script src="~/Areas/Admin/wwwroot/vendor/jquery-easing/jquery.easing.min.js"></script>
+<!-- Custom scripts for all pages-->
+<script src="~/Areas/Admin/wwwroot/js/sb-admin-2.min.js"></script>
+<!-- Page level plugins -->
+<script src="~/Areas/Admin/wwwroot/vendor/datatables/jquery.dataTables.min.js"></script>
+<script src="~/Areas/Admin/wwwroot/vendor/datatables/dataTables.bootstrap4.min.js"></script>
+<!-- Page level custom scripts -->
+<script src="~/Areas/Admin/wwwroot/js/demo/datatables-demo.js"></script>
